@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SOP Hub — Prototype A: Field Manual</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#263746;--navy-deep:#1d2b37;--navy-soft:#324453;--navy-line:#3c4f5e;
+  --green:#77BC1F;--green-soft:#8DC648;
+  --ink:#e8eef2;--ink-soft:#9fb2bf;--paper:#f4f6f7;--label-dark:#55718a;
+  --hfont:'Space Grotesk',sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Roboto',sans-serif;background:#0f1820;color:var(--ink);-webkit-font-smoothing:antialiased;display:flex;justify-content:center}
+
+/* This is the popup — rendered inline for the demo */
+.sop-modal{width:100%;max-width:1080px;height:100vh;background:var(--navy);border:1px solid var(--navy-line);
+  border-radius:20px;overflow:hidden;display:grid;grid-template-columns:300px minmax(0,1fr);box-shadow:0 40px 120px -30px rgba(0,0,0,.8)}
+
+/* SIDEBAR */
+.sop-side{background:var(--navy-deep);border-right:1px solid var(--navy-line);display:flex;flex-direction:column;min-height:0;min-width:0;overflow:hidden}
+.sop-head{padding:22px 22px 16px;border-bottom:1px solid var(--navy-line)}
+.eyebrow{display:flex;align-items:center;gap:9px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--green-soft);font-weight:700;font-family:var(--hfont)}
+.eyebrow svg{width:18px;height:18px}
+.eyebrow svg path{fill:var(--green-soft)}
+.sop-head h2{font-family:var(--hfont);font-size:21px;font-weight:700;margin-top:10px;color:#fff;letter-spacing:-.01em}
+.sop-search{padding:16px 18px;border-bottom:1px solid var(--navy-line)}
+.sop-search input{width:100%;background:var(--navy);border:1px solid var(--navy-line);border-radius:10px;
+  padding:11px 14px 11px 38px;color:var(--ink);font-family:'Roboto';font-size:14px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239fb2bf' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:13px center}
+.sop-search input:focus{outline:none;border-color:var(--green)}
+.sop-nav{flex:1;overflow-y:auto;padding:10px 12px}
+.cat-group{margin-bottom:6px}
+.cat-label{font-family:var(--hfont);font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--label-dark);padding:14px 12px 7px;display:flex;align-items:center;gap:8px}
+.nav-item{display:block;padding:9px 12px;border-radius:9px;font-size:13.5px;color:var(--ink-soft);cursor:pointer;
+  border:1px solid transparent;transition:background .15s,color .15s;line-height:1.3}
+.nav-item:hover{background:var(--navy-soft);color:var(--ink)}
+.nav-item.on{background:rgba(119,188,31,.14);color:#fff;border-color:rgba(119,188,31,.4);font-weight:500}
+.nav-item.hide{display:none}
+.cat-group.hide{display:none}
+
+/* READER */
+.sop-main{overflow-y:auto;min-height:0;min-width:0;background:var(--navy)}
+.reader{max-width:680px;margin:0 auto;padding:42px 48px 80px}
+.crumb{font-family:var(--hfont);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--green-soft);margin-bottom:14px}
+.reader h1{font-family:var(--hfont);font-size:30px;font-weight:700;letter-spacing:-.02em;color:#fff;line-height:1.12;margin-bottom:10px}
+.reader .lede{font-size:15px;color:var(--ink-soft);line-height:1.55;margin-bottom:8px}
+.reader h3{font-family:var(--hfont);font-size:16px;font-weight:600;color:#fff;margin:30px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--navy-line)}
+.reader p{font-size:14.5px;line-height:1.7;color:var(--ink);margin:12px 0}
+.reader ul{list-style:none;margin:14px 0}
+.reader ul li{position:relative;padding-left:22px;font-size:14px;line-height:1.65;color:var(--ink);margin:9px 0}
+.reader ul li::before{content:"";position:absolute;left:2px;top:9px;width:6px;height:6px;border-radius:50%;background:var(--green)}
+.reader ol{counter-reset:s;list-style:none;margin:16px 0}
+.reader ol li{position:relative;padding:4px 0 16px 44px;font-size:14px;line-height:1.6;color:var(--ink);counter-increment:s}
+.reader ol li::before{content:counter(s);position:absolute;left:0;top:2px;width:28px;height:28px;border-radius:8px;
+  background:rgba(119,188,31,.16);border:1px solid rgba(119,188,31,.4);color:var(--green-soft);
+  font-family:var(--hfont);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
+.reader b{color:#fff;font-weight:700}.reader i{color:var(--green-soft);font-style:italic}
+.note{background:rgba(119,188,31,.08);border-left:3px solid var(--green);border-radius:0 10px 10px 0;
+  padding:14px 16px;margin:18px 0;font-size:13.5px;line-height:1.55;color:var(--ink)}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:13px}
+table th{font-family:var(--hfont);font-weight:600;text-align:left;color:var(--green-soft);
+  padding:10px 12px;border-bottom:2px solid var(--navy-line);font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+table td{padding:11px 12px;border-bottom:1px solid var(--navy-line);color:var(--ink);line-height:1.45;vertical-align:top}
+table td:first-child b,table td:first-child{font-weight:500}
+.email-card{background:var(--navy-deep);border:1px solid var(--navy-line);border-radius:12px;overflow:hidden;margin:18px 0}
+.email-bar{background:var(--navy-soft);padding:10px 16px;display:flex;align-items:center;gap:8px;font-family:var(--hfont);font-size:12px;font-weight:600;color:var(--ink-soft);border-bottom:1px solid var(--navy-line)}
+.email-bar svg{width:15px;height:15px;stroke:var(--green-soft)}
+.email-fields{padding:12px 16px;border-bottom:1px solid var(--navy-line);font-size:12.5px}
+.email-fields div{margin:3px 0;color:var(--ink-soft)}.email-fields b{color:var(--ink);font-family:var(--hfont);font-weight:600;display:inline-block;min-width:60px}
+.email-body{padding:16px;font-size:12.5px;line-height:1.6;color:var(--ink);white-space:pre-wrap;font-family:'Roboto'}
+.copy-btn{margin:0 16px 14px;background:var(--green);color:#13260b;border:none;border-radius:8px;padding:8px 16px;
+  font-family:var(--hfont);font-weight:700;font-size:12.5px;cursor:pointer}
+.copy-btn:active{transform:scale(.97)}
+.no-res{padding:40px;text-align:center;color:var(--ink-soft);font-size:14px}
+::-webkit-scrollbar{width:9px}::-webkit-scrollbar-thumb{background:var(--navy-line);border-radius:5px}
+@media(max-width:760px){.sop-modal{grid-template-columns:1fr}.sop-side{display:none}.reader{padding:30px 24px 60px}}
+</style></head>
+<body>
+
+<div class="sop-modal">
+  <aside class="sop-side">
+    <div class="sop-head">
+      <div class="eyebrow">LLAMA LEAGUE
+        <svg viewBox="-5 -10 110 135"><path d="m29.105 77.879c-0.51172 0.65234-0.98438 1.332-1.5508 1.9375 0.10937 4.5547 1.3828 11.375 3.2852 15.523 0.29688 0.65234 0.61328 1.4219 1.1406 1.9258 0.72656 0.69141 2.1094 0.56641 3.0469 0.59375l0.70703 0.023437c0.023437-0.40625 0.18359-1.4492-0.078125-1.7656-0.30078-0.35938-0.91797-0.50391-1.2773-0.85938-1.5391-1.5234-1.8789-3.9648-1.9805-6.0352-0.10938-2.1523-0.11719-4.4219 0.4375-6.5195 0.73828-2.7812 2.1055-4.3477 3.4844-6.7109 0.16406-0.28516 0.32422-0.57422 0.48047-0.86328 0.15625-0.29297 0.30078-0.58594 0.44531-0.88281 0.14453-0.29688 0.27734-0.59375 0.40625-0.89844 0.12891-0.30469 0.25391-0.60547 0.37109-0.91406 0.11719-0.30469 0.23047-0.61719 0.33594-0.92969s0.20703-0.625 0.29688-0.94141c0.089844-0.3125 0.18359-0.63281 0.26172-0.95312s0.15625-0.64062 0.22266-0.96094c-1.2461-0.49609-2.7109-0.93359-3.8867-1.5352-1.3477 3.9609-3.582 7.4883-6.1484 10.762z"/><path d="m80.043 12.555c-1.3359-0.76563-1.9531-2.293-3.043-3.3164-0.63672-0.59766-1.4961-1.0273-2.2734-1.4219 0.63672-1.5234 1.1289-2.9805 1.2539-4.6445 0.023437-0.30078 0.070312-0.65234-0.039063-0.94141-0.042968-0.10938-0.10938-0.21094-0.21875-0.26562-0.1875-0.085938-0.41406-0.015625-0.58594 0.066406-1.2305 0.58203-2.8242 2.2969-3.5586 3.4258-0.35938 0.55469-0.63672 1.1875-1.0234 1.7227 0.13281-2.0391 0.125-3.7148-0.47656-5.6992-0.13672-0.44531-0.26562-0.95312-0.58594-1.3008-0.11719-0.13281-0.20703-0.17969-0.38672-0.18359h-0.11719c-0.47266 0.38672-0.82031 0.99219-1.1484 1.5039-1.4961 2.3516-2.1719 4.293-2.4922 7.0703-3.1172 3.2656-3.2305 8.5703-3.1328 12.809 0.070312 2.1406 0.18359 4.2812 0.34375 6.418 0.3125 4.4023 1.2031 12.379-2.0312 15.809-1.2656 1.3438-3.0859 1.875-4.8867 1.918-2.8984 0.074218-6.5117-0.85156-9.3984-1.4102-5.9102-1.1445-13.688-1.6914-19.574-0.23047-0.73828-1.2969-1.7578-2.0391-3.2031-2.4336-1.7969-0.48828-3.8047-0.31641-5.4258 0.61719-1.4883 0.85938-2.5664 2.3477-2.9961 4.0039-0.38672 1.4883-0.32031 3.5977 0.49219 4.9492 0.20312 0.33203 0.49219 0.70312 0.89453 0.80078 0.20703 0.050782 0.45312 0.039063 0.63281-0.089843 0.21875-0.16016 0.32812-0.44531 0.41016-0.69141 0.11719-0.35937 0.21094-0.75391 0.39844-1.082 0.61328-1.082 1.9297-1.3125 3.0508-1.4727-0.48438 0.89844-0.93359 1.7969-1.2539 2.7734-1.2695 3.8711-0.97266 8.3672-0.12891 12.293 0.48047 2.2344 1.1211 4.4531 1.1055 6.7578-0.015625 1.8555-0.29297 3.8477-0.94922 5.5859-0.42578 1.1328-0.98437 2.2109-1.2734 3.3906-0.60547 2.4648 0.60547 10.105 1.1758 12.91 0.27734 1.3477 0.61328 2.6836 1.0078 4 0.30078 1.0117 0.59375 2.4844 1.6094 3.0156 0.94531 0.49219 2.6445 0.55859 3.7188 0.58594v-1.9648c-1.0508-0.5-1.8789-1.082-2.2891-2.2109-0.89062-2.457-0.60547-8.6445-0.0625-11.281 0.16797-0.81641 0.41406-1.6016 0.77344-2.3555 0.91406-1.9297 2.4531-3.6367 3.7617-5.3164 2.5508-3.2656 5.1953-7.3828 6.2812-11.422 3.9805 1.5391 7.9883 2.9023 12.195 3.6836 2.3203 0.46094 4.6562 0.84375 7.0039 1.1484 1.375 0.17969 2.7891 0.28125 4.1523 0.55469 1.1133 6.2578 1.7812 12.535 2.3867 18.859 0.18359 1.9062 0.35547 3.8086 0.51953 5.7188 0.078125 0.94141 0.078125 1.9766 0.25391 2.9023 0.09375 0.48828 0.34766 1.0273 0.76562 1.3164 0.69922 0.48437 3.1484 0.55859 4.0742 0.57812 0.054688-0.63672 0.20312-1.3633-0.24609-1.8984-0.26172-0.3125-0.64062-0.50781-0.95312-0.77344-0.85156-0.72266-0.74219-1.957-0.67578-2.9609 0.066406-1.0156 0.18359-2.0273 0.27734-3.0391 0.19141-2.3438 0.41406-4.6836 0.66797-7.0195 0.16406-1.5625 0.23047-3.4258 0.58203-4.9297 0.058594 1.5938 0.25391 3.1797 0.39844 4.7656l0.51172 6.125 0.35938 4.0117c0.070313 0.77344 0.09375 1.5898 0.25391 2.3516 0.078125 0.37891 0.25781 0.71875 0.53906 0.98828 0.23828 0.23438 0.54688 0.37891 0.86719 0.46875 0.83984 0.22656 2.6836 0.27344 3.6602 0.38672 0.066406-0.60938 0.25-1.3516-0.17969-1.8633-0.21484-0.25781-0.53906-0.45312-0.80078-0.66016-1.1758-0.91406-1.3008-1.6562-1.2188-3.0781 0.10938-1.7891 0.33203-3.582 0.50391-5.3672 0.32422-3.5977 0.67578-7.1914 1.0508-10.785 0.26172-2.4766 0.60547-4.9648 0.79297-7.4414 1.0195-1.0273 1.8906-2.1641 2.6914-3.3672 2.9609-4.4453 3.7344-8.9336 3.7109-14.188-0.027344-6.7812-1.457-13.484-3.0195-20.051-0.67188-2.8164-1.5273-5.7188-1.9414-8.5859-0.089843-0.63281-0.27734-1.9492 0.23828-2.4492 0.72656-0.70703 3.4531-0.87891 4.457-0.83203 1.668 0.070313 3.5938 1.2148 5.0508-0.085937 0.35938-0.32422 1.0547-1 1.0664-1.5156 0.003907-0.27734-0.13281-0.53906-0.23828-0.78516 0.49219-0.30859 0.83984-0.60938 0.97266-1.207 0.09375-0.41406 0.078125-0.98828-0.18359-1.3477-0.4375-0.60156-3.9805-1.7695-4.9023-2.3008zm-5.6406-0.11719c0 0.042969-0.003906 0.085938-0.015625 0.125-0.007813 0.042969-0.015625 0.085938-0.023438 0.125-0.011719 0.042969-0.023437 0.082031-0.039062 0.12109-0.015625 0.042968-0.03125 0.078125-0.050781 0.11719-0.20313 0.40234-0.52734 0.57812-0.9375 0.71094-0.26953 0.011719-0.51953 0.011719-0.77344-0.10156-0.32422-0.14453-0.57812-0.41406-0.6875-0.75391-0.011719-0.039062-0.023438-0.074219-0.03125-0.11328-0.007812-0.039063-0.015625-0.078125-0.019531-0.11719-0.003907-0.039062-0.003907-0.078125-0.003907-0.11719 0-0.042969 0-0.078125 0.003907-0.11719 0.003906-0.039062 0.007812-0.078125 0.015625-0.11719 0.007812-0.039063 0.015625-0.078125 0.027344-0.11328 0.011718-0.039063 0.023437-0.074219 0.039062-0.10938 0.015625-0.035156 0.03125-0.070312 0.050781-0.10937 0.21094-0.40625 0.55078-0.60156 0.96875-0.74609 0.25781-0.015625 0.50391 0.003906 0.74219 0.10938 0.039062 0.015625 0.074219 0.035156 0.10938 0.054687 0.035156 0.019532 0.070312 0.042969 0.10547 0.066406 0.03125 0.023438 0.066407 0.050782 0.097657 0.078126 0.03125 0.027343 0.0625 0.054687 0.089843 0.085937 0.027344 0.03125 0.054688 0.0625 0.078126 0.09375 0.023437 0.03125 0.050781 0.066406 0.070312 0.10156 0.023438 0.035156 0.042969 0.070312 0.0625 0.10937 0.019531 0.035157 0.03125 0.074219 0.050781 0.11328 0.015625 0.042968 0.027344 0.078125 0.039063 0.12109 0.011718 0.042968 0.019531 0.082031 0.023437 0.125 0.003907 0.042968 0.011719 0.085937 0.015625 0.125v0.12891z"/></svg>
+      </div>
+      <h2>SOP Knowledge Base</h2>
+    </div>
+    <div class="sop-search"><input id="searchA" placeholder="Search SOPs…" oninput="filterA(this.value)"></div>
+    <nav class="sop-nav" id="navA"></nav>
+  </aside>
+  <main class="sop-main"><div class="reader" id="readerA"></div></main>
+</div>
+
+<script>
+/* ============================================================
+   SOP KNOWLEDGE BASE — CONTENT SOURCE OF TRUTH
+   Rewritten in clean knowledge-base voice (scannable, active,
+   second-person, lead with the action). Edit articles here.
+   Each article: { id, cat, title, summary, blocks:[...] }
+   block types: h (heading), p (para), steps (ordered), list (bullets),
+                table {head:[], rows:[[]]}, note, email {fields, body}
+   ============================================================ */
+const SOP_CATEGORIES = [
+  { id:'pm',     label:'Project Management',      icon:'route' },
+  { id:'setup',  label:'Workspace & Assets',      icon:'folder' },
+  { id:'comms',  label:'Stakeholder Comms',       icon:'mail' },
+  { id:'author', label:'Authoring & Development',  icon:'pencil' },
+  { id:'perf',   label:'Performance & Growth',     icon:'chart' },
+  { id:'lms',    label:'LMS & Publishing',         icon:'upload' },
+];
+
+const SOP_ARTICLES = [
+  /* ---------- 1.0 PROJECT MANAGEMENT ---------- */
+  {
+    id:'workflow', cat:'pm', title:'End-to-End Designer Workflow',
+    summary:'How a project moves through the Llamaland board, from PM intake to closeout.',
+    blocks:[
+      {t:'p', v:'This is the master path for every project on the Llamaland Monday board. Use it to know who owns what, which status to set, and when to loop.'},
+      {t:'note', v:'Quick path: Intake → Needs Analysis → Design → Internal Review → Stakeholder Review → Closeout. If no Needs Analysis is required, the PM sends you straight to Design.'},
+      {t:'h', v:'Who owns what'},
+      {t:'list', v:[
+        '<b>PM</b> — picks up requests, runs intake, decides if a designer and proposal are needed, assigns you, fills PM-side fields.',
+        '<b>You (Designer)</b> — own Needs Analysis, complexity score, estimated hours, phase progression, time tracking, and extensions.'
+      ]},
+      {t:'h', v:'The steps'},
+      {t:'steps', v:[
+        '<b>Intake (PM).</b> PM reviews the Content Request, runs the stakeholder intake meeting, confirms scope, and sets <i>Needs Analysis Required?</i>',
+        '<b>Handoff (PM).</b> PM assigns you, runs a handoff, emails stakeholders a heads-up, and sets Project Phase to <b>Needs Analysis</b> (or straight to <b>Design</b> if none is required).',
+        '<b>Needs Analysis (you).</b> Take ownership, schedule the stakeholder meeting, confirm requirements, and score Designer Complexity. If your score differs from the PM\u2019s by more than 5 points, note why in the item notes.',
+        '<b>Proposal (you).</b> Draft while still in Needs Analysis. Get internal sign-off (Step 6), then move to Stakeholder Review. Toggle to <b>Revise</b> for changes; once approved, move to <b>Design</b>.',
+        '<b>Switch to Designer View.</b> When you enter Design, switch the board to Designer View to expose build-tracking columns.',
+        '<b>Internal Review (required gate).</b> See the Internal Review SOP. Proposal + materials saved in the project folder; eLearning in Rise 360 and assigned in Review 360 with a due date. Baseline is 3 business days.',
+        '<b>Stakeholder Review.</b> After internal approval, move to Stakeholder Review. Loop between Review and Revise as needed.',
+        '<b>Ready for Approval.</b> When feedback is resolved, set phase to <b>Ready for Stakeholder Approval</b>.',
+        '<b>Closeout.</b> Record actual design time and completion date. Project is done for tracking.'
+      ]}
+    ]
+  },
+  {
+    id:'hierarchy', cat:'pm', title:'Project vs. Deliverable vs. Task',
+    summary:'When to log work as a Project, a Deliverable, or a Task on the board.',
+    blocks:[
+      {t:'p', v:'Categorize every piece of work into one of three levels so the board reflects real progress.'},
+      {t:'table', head:['Level','What it is','Lives on'], rows:[
+        ['Project','The value \u2014 a complete training outcome with a goal and sign-off.','Main line (parent)'],
+        ['Deliverable','The product \u2014 a major standalone artifact (outline, storyboard, Rise build).','Sub-item'],
+        ['Task','The action \u2014 a single to-do (fix slide 4, export SCORM).','Sub-item / checklist']
+      ]},
+      {t:'h', v:'Quick test'},
+      {t:'list', v:[
+        '<b>Project</b> if it solves a business problem, needs multiple deliverables, and requires final sign-off.',
+        '<b>Deliverable</b> if it can stand alone for a review cycle and follows the quality gate.',
+        '<b>Task</b> if it\u2019s a single action that doesn\u2019t need its own stakeholder approval.'
+      ]},
+      {t:'note', v:'Complexity scores and SLA tracking live at the Project level only. Log actual hours at the Deliverable level for velocity forecasting.'}
+    ]
+  },
+  {
+    id:'sla', cat:'pm', title:'SLA & Automated Date Logic',
+    summary:'How the board auto-calculates deadlines, and the rules that keep the data clean.',
+    blocks:[
+      {t:'p', v:'The board uses anchor dates to auto-calculate the next deadline. If an anchor is blank, the dependent date won\u2019t populate.'},
+      {t:'table', head:['Phase','Trigger','Formula','Populates'], rows:[
+        ['Intake & Proposal','Intake Meeting Date','+ 10 business days','Proposal Due Date (Auto)'],
+        ['Stakeholder Review','Proposal Sent On','+ 7 days','Stakeholder Review Deadline (Auto)'],
+        ['Prototype','Outline Approved Date','+ 7 days','Prototype V1 Due Date (Auto)'],
+        ['Revision','Feedback Receipt Date','+ 7 days','Send Revisions By + Re-review (Auto)']
+      ]},
+      {t:'h', v:'Data integrity rules'},
+      {t:'list', v:[
+        '<b>Never type over (Auto) columns</b> \u2014 it breaks the formula for that line.',
+        '<b>Use the Manual Due Date column</b> when a stakeholder negotiates a different date.',
+        '<b>Document any manual date</b> in Project Line Notes with the reason.'
+      ]}
+    ]
+  },
+  {
+    id:'phases', cat:'pm', title:'Project Phase & Status Definitions',
+    summary:'The shared dictionary for the Phase and Status columns.',
+    blocks:[
+      {t:'p', v:'Update Project Phase the moment work progresses \u2014 it drives the percent-complete automation and leadership dashboards.'},
+      {t:'h', v:'Phases'},
+      {t:'list', v:[
+        '<b>Intake</b> \u2014 PM reviews the request and runs the first meeting.',
+        '<b>Needs Analysis</b> \u2014 discovery + proposal drafting.',
+        '<b>Design</b> \u2014 active build (Rise, scripting, assets).',
+        '<b>Internal Review</b> \u2014 the quality gate before stakeholders.',
+        '<b>Stakeholder Review</b> \u2014 with the requester/SMEs for feedback.',
+        '<b>Revise</b> \u2014 implementing requested changes.',
+        '<b>Ready for Approval</b> \u2014 feedback resolved, awaiting sign-off.',
+        '<b>Launch</b> \u2014 delivered or handed to the LMS.'
+      ]},
+      {t:'h', v:'Internal Review statuses'},
+      {t:'list', v:[
+        '<b>Ready for Review</b> \u2014 readiness met, waiting on a reviewer.',
+        '<b>In Internal Review</b> \u2014 reviewer is auditing.',
+        '<b>Changes Required</b> \u2014 fixes needed before stakeholders.',
+        '<b>Approved & Signed Off</b> \u2014 cleared the gate.',
+        '<b>On Hold</b> \u2014 paused for missing info or priority shift.'
+      ]},
+      {t:'note', v:'Phase = where the work is. Status = the condition of the work within that stage.'}
+    ]
+  },
+  {
+    id:'extensions', cat:'pm', title:'Extension & Revision Tracking',
+    summary:'How to document deadline shifts and revision loops so SLA data stays honest.',
+    blocks:[
+      {t:'h', v:'Extensions'},
+      {t:'p', v:'An extension is any move of the Project Due Date set at kickoff. When the delivery date is no longer feasible:'},
+      {t:'list', v:[
+        'Set <b>Extension Requested</b> to Yes.',
+        'Increase <b>Number of Extensions</b> by 1.',
+        'Enter the cumulative <b>Total Extension Days</b>.',
+        'In Project Line Notes, record <b>who</b> requested it and <b>why</b>.'
+      ]},
+      {t:'h', v:'Revisions'},
+      {t:'list', v:[
+        'Track state with <b>Revision Status</b>: Drafting, Reviewing, or Revising.',
+        'Set <b>Revisions Needed</b> to Yes when changes are requested.',
+        '<b>Send Revisions By (Auto)</b> = feedback receipt + 7 days.',
+        'Enter the actual <b>Revision Sent</b> date; the system grants another 7-day re-review.'
+      ]},
+      {t:'note', v:'Projects may loop between Stakeholder Review and Revise as many times as needed. Once final, enter the Approval Received date to move toward Closeout.'}
+    ]
+  },
+  /* ---------- 2.0 WORKSPACE & ASSETS ---------- */
+  {
+    id:'folders', cat:'setup', title:'Project Folder Creation',
+    summary:'Set up a standardized Drive folder so versions never get lost.',
+    blocks:[
+      {t:'h', v:'The golden rule: naming'},
+      {t:'p', v:'Always title the parent folder <b>Name_ProjectName</b> (e.g. <i>Averi_MakingPayments</i>). This keeps projects grouped by designer and searchable.'},
+      {t:'h', v:'Option A \u2014 manual'},
+      {t:'steps', v:[
+        'In Google Drive, go to Training Projects Team \u203a Design Team Content Hub \u203a Project Library \u203a [current year] Projects.',
+        'New \u203a Folder, titled with the golden rule.',
+        'Inside it, create two subfolders: <b>assets</b> (active work) and <b>archive</b> (retired drafts).'
+      ]},
+      {t:'h', v:'Option B \u2014 automated'},
+      {t:'steps', v:[
+        'Open the Project Folder Automation web link.',
+        'Enter the parent name (Name_ProjectName) and the project title; pick any extra subfolders.',
+        'Click Create and authorize if prompted (first time only).',
+        'Click the returned link to verify the folder and subfolders exist.'
+      ]}
+    ]
+  },
+  {
+    id:'monday-link', cat:'setup', title:'Link Your Folder to Monday.com',
+    summary:'Connect the Drive folder to the project item so others can reach your assets.',
+    blocks:[
+      {t:'steps', v:[
+        'Copy the URL of your parent project folder from Google Drive.',
+        'Open the project board in Monday.com and find your item.',
+        'Paste the link into the <b>Project Location</b> field.',
+        'Click it to confirm it works \u2014 reviewers use this during Internal Review.'
+      ]}
+    ]
+  },
+  {
+    id:'retention', cat:'setup', title:'Asset Retention & Lifecycle',
+    summary:'Keep the Projects Library clean with simple archiving rules.',
+    blocks:[
+      {t:'list', v:[
+        '<b>Ongoing</b> \u2014 move outdated drafts and source files into the project\u2019s <b>archive</b> subfolder as you go.',
+        '<b>One year</b> \u2014 folders older than a year are reviewed for long-term archiving.',
+        '<b>Final</b> \u2014 completed folders move from the active Library to the Archive directory.'
+      ]}
+    ]
+  },
+  /* ---------- 3.0 STAKEHOLDER COMMS ---------- */
+  {
+    id:'proposal-review', cat:'comms', title:'Proposal Review & Approval',
+    summary:'Get formal stakeholder alignment on goal, scope, and timeline before building.',
+    blocks:[
+      {t:'steps', v:[
+        'Complete the proposal doc in Google Sheets.',
+        'Get Team Lead approval for feasibility and alignment.',
+        'Compose the email \u2014 import the template via the Gmail logo, or copy the body below.',
+        'CC the item-specific project email from Monday.com so the thread auto-logs.',
+        'Confirm all links are live and send.'
+      ]},
+      {t:'email',
+        fields:[['Subject','Proposal Review \u2013 [Project Name] \u2013 Action Required by [Date]']],
+        body:'Hi [Name],\n\nThe project proposal for [Project Name] is ready for your review. Please confirm the details and roles below so we can move forward on schedule.\n\n[REVIEW LINK]\n\nPlease focus on:\n\u2022 Key dates and deadlines\n\u2022 Assigned roles and SME/stakeholder names\n\u2022 Alignment with your team\u2019s capacity\n\nNote: If you\u2019re named as a stakeholder or SME, you\u2019re expected to participate and meet deadlines. If unavailable, assign a proxy or tell us now.\n\nPlease reply by EOD [Date] with one of:\n\u2022 I approve as-is.\n\u2022 I approve with the outlined changes. No re-review needed.\n\u2022 I do not approve. Please send an updated link after revisions.\n\nNote: No response by the deadline = approved, and we proceed.\n\nThanks for your partnership,\nInstructional Design Team'
+      }
+    ]
+  },
+  {
+    id:'outline-review', cat:'comms', title:'Content Outline Review',
+    summary:'Confirm flow, objectives, and assessment logic before heavy build work.',
+    blocks:[
+      {t:'steps', v:[
+        'Verify the outline/script/storyboard is complete and saved in the <b>assets</b> folder.',
+        'Compose via the Gmail template or copy the body below.',
+        'Update all bracketed fields for your project.',
+        'CC the item-specific project email so feedback auto-logs.',
+        'Confirm the review link is accessible and send.'
+      ]},
+      {t:'email',
+        fields:[['Subject','Content Review \u2013 [Project Name] \u2013 Action Required by [Date]']],
+        body:'Hi [Name],\n\nThe objectives and content outline for [Project Name] are ready for review. Please confirm accuracy, flow, and coverage before full development.\n\nItems for review:\n\u2022 Course Objectives \u2014 the three primary outcomes\n\u2022 Learning Objectives \u2014 specific performance outcomes\n\u2022 High-Level Outline \u2014 the roadmap, not a full script\n\n[REVIEW LINK]\n\nPlease review by EOD [Date] and reply with one of:\n\u2022 I approve as-is.\n\u2022 I approve with the following changes. No re-review needed.\n\u2022 I do not approve. Please send an updated version after revisions.\n\nNote: No response by the deadline = approved, and we proceed.\n\nThanks for your partnership,\nInstructional Design Team'
+      }
+    ]
+  },
+  {
+    id:'prototype-review', cat:'comms', title:'Prototype Review',
+    summary:'Share a functional preview so stakeholders can confirm flow before full build.',
+    blocks:[
+      {t:'steps', v:[
+        'Confirm the Review 360 link allows stakeholder comments.',
+        'Compose via the template or copy the body below.',
+        'CC the item-specific project email to auto-log the thread.',
+        'Confirm the prototype link works and send.'
+      ]},
+      {t:'email',
+        fields:[['Subject','Prototype ready for review \u2013 [Project Title] \u2013 feedback due [Date]']],
+        body:'Hi [Name],\n\nThe prototype for [Project Title] is ready. This early build lets you confirm flow, structure, and accuracy before full development continues. Please submit feedback via Review 360 by [Date].\n\n[REVIEW LINK]\n\nPlease focus on:\n\u2022 Flow and navigation\n\u2022 Accuracy of content\n\u2022 Tone, examples, and scenarios\n\u2022 Visual direction\n\nReply with one of:\n\u2022 I approve as-is.\n\u2022 I approve with the changes in my feedback. No re-review needed.\n\u2022 I do not approve. Please send an updated link after revisions.\n\nNote: Delayed feedback may impact the timeline.\n\nThanks for your partnership,\nInstructional Design Team'
+      }
+    ]
+  },
+  {
+    id:'final-review', cat:'comms', title:'Final Review & Approval',
+    summary:'Get final sign-off that the training is cleared to go live.',
+    blocks:[
+      {t:'steps', v:[
+        'Confirm the final link works, all comments are resolved, and it reflects the final build.',
+        'Compose via the template or copy the body below.',
+        'CC the item-specific project email to auto-log.',
+        'Send to stakeholders for approval.'
+      ]},
+      {t:'email',
+        fields:[['Subject','Final review for approval \u2013 [Project Title] \u2013 response due [Date]']],
+        body:'Hi [Name],\n\nThe final version of [Project Title] is ready for review and approval. All prior feedback has been addressed; this reflects the training as it will appear at launch. Please submit any final feedback via Review 360 by [Date].\n\n[REVIEW LINK]\n\nAt this stage, limit feedback to:\n\u2022 Critical content inaccuracies\n\u2022 Functionality issues\n\u2022 Compliance or policy concerns\n\nReply by [Date] with one of:\n\u2022 I approve as-is.\n\u2022 I approve with the changes in my feedback. No re-review needed.\n\u2022 I do not approve. Please send an updated version after revisions.\n\nNote: Delays may impact the go-live date.\n\nThanks for your partnership,\nInstructional Design Team'
+      }
+    ]
+  },
+  {
+    id:'weekly-update', cat:'comms', title:'Weekly Project Update',
+    summary:'The Friday status email that keeps stakeholders informed and flags blockers.',
+    blocks:[
+      {t:'note', v:'Send by EOD every Friday for any project in Needs Analysis, Design, Review, or Revise.'},
+      {t:'steps', v:[
+        'Compose via the template or copy the body below.',
+        'CC the item-specific project email.',
+        'BCC <b>design@conservice.com</b> so the team stays informed without joining the reply thread.'
+      ]},
+      {t:'email',
+        fields:[['Subject','Weekly Project Update \u2013 [Project/Course Title]'],['Bcc','design@conservice.com']],
+        body:'Project: [Title]\nUpdate: [Date]\n\nWhat we need from you:\n\u2022 Review and give feedback on [item] by [date]\n\u2022 Provide [audience / objectives / enrollment] by [date]\n\nWhat we\u2019re working on:\n\u2022 [Outline drafted and in review]\n\u2022 [Module built in Rise, awaiting content approval]\n\nThanks for your partnership,\nInstructional Design Team'
+      }
+    ]
+  },
+  {
+    id:'completion', cat:'comms', title:'Project Completion & Wrap-up',
+    summary:'Confirm delivery, summarize outcomes, and invite feedback.',
+    blocks:[
+      {t:'note', v:'Send within 1 business day of completion.'},
+      {t:'h', v:'Boost survey response'},
+      {t:'list', v:[
+        '<b>Final verbal push</b> \u2014 at sign-off, mention the 5-minute survey is coming and why it matters.',
+        '<b>Personalize</b> \u2014 add a one-line thank-you above the link for involved stakeholders.',
+        '<b>Show impact</b> \u2014 remind them surveys shape how future requests are prioritized.'
+      ]},
+      {t:'steps', v:[
+        'Compose via the template or copy the body below.',
+        'Replace bracketed fields with official Llamaland data.',
+        'CC the item-specific project email; BCC design@conservice.com.',
+        'Verify it appears in the thread and mark the Monday item Complete.'
+      ]},
+      {t:'email',
+        fields:[['Subject','Project Finalized \u2013 [Project Name] \u2013 [Date]'],['Bcc','design@conservice.com']],
+        body:'Hi [Name],\n\nThe project below is complete \u2014 thank you for your partnership!\n\nProject Summary\n\u2022 Request: [original request]\n\u2022 Delivered: [what we created]\n\u2022 Completed: [date]\n\nWhat you need to know:\n[Follow-ups, tabled items, or future submissions]\n\nWe\u2019d love your feedback \u2014 could you take 5 minutes to share your experience? [SURVEY LINK]\n\nThanks for your partnership,\nInstructional Design Team'
+      }
+    ]
+  },
+  {
+    id:'lms-request', cat:'lms', title:'LMS Learning Object Update Request',
+    summary:'Give the LMS admin every detail to upload or update a course with zero back-and-forth.',
+    blocks:[
+      {t:'steps', v:[
+        'Verify the course meets Rise 360 standards (fonts, navy branding, required Exit Block).',
+        'Export the final SCORM/Web package into the <b>assets</b> folder.',
+        'Compose via the template or copy the body below.',
+        'Send to <b>lmsadmin@conservice.com</b>; CC the item-specific project email.',
+        'Attach the file or provide a direct folder link.'
+      ]},
+      {t:'email',
+        fields:[['To','lmsadmin@conservice.com'],['Subject','LMS Update Request \u2013 [Course Title] \u2013 Effective [Date]']],
+        body:'Course Details\n\u2022 Course Title: [as in LMS]\n\u2022 Learning Object Title: [as in LMS]\n\u2022 Link: [direct link, if applicable]\n\nWhat Needs to Be Updated:\n[Specific changes. For assessments, include the exact question number and current text.]\nNote: For major updates, include a link to the LMS Test Builder.\n\nEffective Date: [go-live date]\nChange Summary: [brief note for version tracking]\n\nThanks!\n[Your Name]'
+      }
+    ]
+  },
+  /* ---------- 4.0 AUTHORING ---------- */
+  {
+    id:'rise', cat:'author', title:'Build eLearning in Rise 360',
+    summary:'Standardized setup for accessible, on-brand, instructionally sound Rise courses.',
+    blocks:[
+      {t:'steps', v:[
+        '<b>New course.</b> Log into Rise 360, open the Instructional Design Team Workspace (all courses live in the shared workspace). Title per your project brief. Pick Microlearning only if it\u2019s short, scrollable, single-outcome (under ~10 min); otherwise Full Course.',
+        '<b>Theme.</b> Settings \u203a Theme \u203a Fonts \u2192 Roboto for heading and body. Set accents to brand; use Conservice Navy (#263746) for primary buttons and headers.',
+        '<b>Settings.</b> Hide Author. Open the three-dot menu for navigation, labels, and tracking. Set a branded cover image from the Assets & Tools library.',
+        '<b>Build.</b> Mix block types (Text, Statement, Accordion, Knowledge Check). Use storytelling, role-based examples, branded visuals, and Section Headers.',
+        '<b>Exit block.</b> Add the standard REQUIRED_CLOSING block at the end of nearly every course.',
+        '<b>Accessibility.</b> See the checklist below.',
+        '<b>Completeness.</b> Confirm content meets the learning objectives; flag gaps for reviewer follow-up.',
+        '<b>Publish.</b> Share the first draft via Review 360, resolve feedback, then follow the LMS upload process.'
+      ]},
+      {t:'h', v:'Accessibility checklist'},
+      {t:'list', v:[
+        'Meaningful alt text on all images.',
+        'Never use color alone \u2014 back it with icons, labels, or text.',
+        'Maintain at least 4.5:1 contrast for body text.',
+        'Avoid ALL CAPS in body text and buttons.',
+        'Confirm keyboard navigation and screen-reader compatibility.',
+        'Run an accessibility pass in Preview or an approved tool.'
+      ]}
+    ]
+  },
+  {
+    id:'facilitator', cat:'author', title:'Facilitator\u2019s Guide Development',
+    summary:'Populate the Facilitator\u2019s Guide template with consistent formatting and triggers.',
+    blocks:[
+      {t:'steps', v:[
+        '<b>Setup & titles.</b> Add the [Module Name] to the cover and title pages. Populate the Resources table on page 2 with content titles and hyperlinked files.',
+        '<b>Conventions.</b> Apply the formatting key below so facilitators can navigate live.',
+        '<b>Icon triggers.</b> Use Action (technical task), Discussion (pose a question), Pause (wait time), Key (desired outcome).',
+        '<b>Slide notes.</b> For each slide, fill the delivery table: slide # + title, estimated timing, presentation notes with [CLICK] triggers, facilitator actions as checkboxes, discussion prompts, and the facilitator key.',
+        '<b>Quality gate.</b> Save the guide in the linked project folder before submitting for Internal Review.'
+      ]},
+      {t:'h', v:'Formatting key'},
+      {t:'table', head:['Format','Meaning','Facilitator action'], rows:[
+        ['Italic','Suggested script','Adapt to natural speaking style.'],
+        ['Bold','Mandatory info','Say exactly as written for compliance.'],
+        ['Bold (Action)','Technical trigger','Execute the task (e.g. launch poll).']
+      ]}
+    ]
+  },
+  /* ---------- 5.0 PERFORMANCE ---------- */
+  {
+    id:'soe', cat:'perf', title:'Monthly Standards of Excellence (SOE)',
+    summary:'Complete your self-evaluation and Project Analysis, then calibrate with your leader.',
+    blocks:[
+      {t:'steps', v:[
+        '<b>SOE submission.</b> Pick the SOE month/year. Use Clear Form to reset before a new entry (it won\u2019t delete submitted data unless you\u2019ve synced an old period). Rate each skill 0\u20135; add notes for any rating above or below 3 (missing notes highlight yellow). Submit and confirm.',
+        '<b>Project Analysis.</b> Pick the month/year, enter project details (name, stakeholders, timeline, days, SLA, extensions), rate and annotate, then submit.',
+        '<b>Leader evaluation.</b> Leader retrieves your record, rates, and submits; both dashboards flip to Complete.',
+        '<b>Calibration.</b> Select the period (it won\u2019t default to the latest month), click sync to see leader feedback. Discrepancies highlight dark yellow. Discuss in your 1:1; agreed changes are re-submitted by the leader.'
+      ]}
+    ]
+  },
+  {
+    id:'cqp', cat:'perf', title:'Conservice Quality Presentation (CQP)',
+    summary:'Update and present your monthly data-driven project slides.',
+    blocks:[
+      {t:'note', v:'Cadence: Week 1 each month. Slides finalized 24 hours before the meeting. Keep your talk to 8.5 minutes.'},
+      {t:'steps', v:[
+        'Open the CQP Presentation Template in Google Slides.',
+        'Complete your assigned slides: project completion (totals + % within SLA), pipeline by status/type, and Wins & Opportunities (each opportunity needs at least one recommended action).',
+        'If co-designing, clearly distinguish your contributions.',
+        'Present \u2014 speak to the data and the \u201cwhy,\u201d don\u2019t read slides. Use Monday.com charts to support claims.'
+      ]}
+    ]
+  }
+];
+
+</script>
+<script>
+function blockHTML(b){
+  if(b.t==='p') return '<p>'+b.v+'</p>';
+  if(b.t==='h') return '<h3>'+b.v+'</h3>';
+  if(b.t==='note') return '<div class="note">'+b.v+'</div>';
+  if(b.t==='list') return '<ul>'+b.v.map(x=>'<li>'+x+'</li>').join('')+'</ul>';
+  if(b.t==='steps') return '<ol>'+b.v.map(x=>'<li>'+x+'</li>').join('')+'</ol>';
+  if(b.t==='table') return '<table><thead><tr>'+b.head.map(h=>'<th>'+h+'</th>').join('')+'</tr></thead><tbody>'+
+    b.rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
+  if(b.t==='email'){
+    var f=(b.fields||[]).map(x=>'<div><b>'+x[0]+'</b> '+x[1]+'</div>').join('');
+    var id='em'+Math.random().toString(36).slice(2,7);
+    return '<div class="email-card"><div class="email-bar"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>Email template</div>'+
+      '<div class="email-fields">'+f+'</div><div class="email-body" id="'+id+'">'+b.body+'</div>'+
+      '<button class="copy-btn" onclick="copyEm(\''+id+'\',this)">Copy email body</button></div>';
+  }
+  return '';
+}
+function copyEm(id,btn){var t=document.getElementById(id).innerText;navigator.clipboard.writeText(t).then(()=>{var o=btn.textContent;btn.textContent='Copied ✓';setTimeout(()=>btn.textContent=o,1400)})}
+function catLabel(id){return (SOP_CATEGORIES.find(c=>c.id===id)||{}).label||''}
+function render(id){
+  var a=SOP_ARTICLES.find(x=>x.id===id);if(!a)return;
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('on',n.dataset.id===id));
+  document.getElementById('readerA').innerHTML='<div class="crumb">'+catLabel(a.cat)+'</div><h1>'+a.title+'</h1><p class="lede">'+a.summary+'</p>'+
+    a.blocks.map(blockHTML).join('');
+  document.querySelector('.sop-main').scrollTop=0;
+}
+function buildNav(){
+  var html='';
+  SOP_CATEGORIES.forEach(c=>{
+    var arts=SOP_ARTICLES.filter(a=>a.cat===c.id);if(!arts.length)return;
+    html+='<div class="cat-group" data-cat="'+c.id+'"><div class="cat-label">'+c.label+'</div>'+
+      arts.map(a=>'<div class="nav-item" data-id="'+a.id+'" data-search="'+(a.title+' '+a.summary).toLowerCase()+'" onclick="render(\''+a.id+'\')">'+a.title+'</div>').join('')+'</div>';
+  });
+  document.getElementById('navA').innerHTML=html;
+}
+function filterA(q){
+  q=q.trim().toLowerCase();
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('hide', q && n.dataset.search.indexOf(q)<0));
+  document.querySelectorAll('.cat-group').forEach(g=>{
+    var any=[...g.querySelectorAll('.nav-item')].some(n=>!n.classList.contains('hide'));
+    g.classList.toggle('hide',!any);
+  });
+}
+buildNav();render(SOP_ARTICLES[0].id);
+</script>
+</body></html>

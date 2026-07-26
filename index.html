@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ID Team Hub — Direction B (refined)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* === CONSERVICE BRAND === */
+    --navy:#263746;
+    --navy-deep:#1d2b37;
+    --navy-soft:#324453;
+    --navy-line:#3c4f5e;
+    --green:#77BC1F;            /* leaf green — ACCENT ONLY */
+    --green-soft:#8DC648;
+    --dark-gray:#555759;
+    --light-gray:#D2D3D3;
+    --orange:#FF8300;
+    --blue:#2172B7;
+    --paper:#f7f8f5;
+    --paper-2:#e7e9e2;
+    --ink:#eef2f4;
+    --ink-soft:#b6c1ca;
+    --muted:#8593a0;
+    --label-dark:#5a6672;
+    --radius:14px;
+    --hfont:'Space Grotesk', sans-serif; /* section headings — clean, separate from hero display font */
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Roboto',-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--navy);color:var(--ink);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 30px;}
+
+  /* shared section eyebrow */
+  .seclabel{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--green-soft);font-weight:700;display:flex;align-items:center;gap:9px;}
+  .seclabel .mark{width:17px;height:17px;flex:none;}
+  .seclabel .mark svg path{fill:currentColor;}
+
+  /* llama marks */
+  .llama-mark{flex:none;}
+  .llama-mark svg{width:100%;height:100%;display:block;}
+  .llama-mark svg path{fill:var(--green-soft);}
+
+  /* ---------- NAV ---------- */
+  .B-nav{position:absolute;top:0;left:0;right:0;z-index:10;padding:20px 0;
+    background:linear-gradient(180deg,rgba(13,22,30,.45) 0%,rgba(13,22,30,0) 100%);}
+  .B-nav .wrap{display:flex;align-items:center;gap:13px;}
+  .B-nav .llama-mark{width:40px;height:40px;}
+  .brandname{font-size:15px;font-weight:700;line-height:1.15;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.4);}
+  .brandname span{display:block;font-size:12px;font-weight:500;color:rgba(255,255,255,.82);}
+  .B-nav nav{margin-left:auto;display:flex;gap:26px;}
+  .B-nav nav a{color:rgba(255,255,255,.9);text-decoration:none;font-size:13.5px;font-weight:500;text-shadow:0 1px 8px rgba(0,0,0,.35);}
+  .B-nav nav a:hover{color:#9bdc4f;}
+
+  /* ---------- HERO (spatial) ---------- */
+  .B-hero{position:relative;min-height:480px;display:flex;align-items:flex-start;overflow:hidden;background:var(--navy-deep);}
+  .B-hero-bg{position:absolute;inset:0;background-image:url('assets/hero.webp');background-size:cover;background-position:58% 42%;}
+  /* brand-tinted scrim: navy depth in corners + bottom, keeps photo glowing center */
+  .B-hero-scrim{position:absolute;inset:0;background:
+    linear-gradient(180deg,rgba(29,43,55,.55) 0%,rgba(29,43,55,0) 22%,rgba(29,43,55,0) 55%,rgba(29,43,55,.72) 88%,var(--navy-deep) 100%),
+    radial-gradient(120% 90% at 22% 30%,rgba(38,55,70,.42) 0%,rgba(38,55,70,0) 55%);}
+  .B-hero-inner{position:relative;z-index:5;padding:96px 0 60px;}
+  /* the floating visionOS glass panel */
+  .B-glass{max-width:1100px;padding:44px 50px;border-radius:28px;
+    background:rgba(31,43,55,.30);
+    backdrop-filter:blur(26px) saturate(135%);-webkit-backdrop-filter:blur(26px) saturate(135%);
+    border:1px solid rgba(255,255,255,.22);border-top-color:rgba(255,255,255,.42);border-left-color:rgba(255,255,255,.30);
+    box-shadow:0 30px 70px -24px rgba(13,22,30,.7), inset 0 1px 0 rgba(255,255,255,.28), inset 0 -1px 0 rgba(119,188,31,.10);
+    transform:translateZ(0);}
+  .B-kicker{font-size:12.5px;letter-spacing:.18em;text-transform:uppercase;color:#aee06a;font-weight:700;margin-bottom:18px;text-shadow:0 1px 8px rgba(0,0,0,.3);}
+  .B-hero h1{font-family:var(--hfont);font-size:52px;line-height:1.05;font-weight:700;letter-spacing:-.02em;color:#fff;text-shadow:0 2px 18px rgba(13,22,30,.45);}
+  .B-hero h1 em{font-style:normal;color:#9bdc4f;}
+  .B-hero p{margin-top:20px;font-size:16.5px;color:rgba(255,255,255,.92);max-width:440px;line-height:1.55;text-shadow:0 1px 12px rgba(13,22,30,.4);}
+  .B-cta{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap;}
+  .B-cta a{text-decoration:none;font-size:14px;font-weight:700;padding:13px 24px;border-radius:12px;}
+  .B-cta .primary{background:var(--green);color:#13260b;box-shadow:0 8px 24px -8px rgba(119,188,31,.6);}
+  .B-cta .ghost{background:rgba(255,255,255,.12);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.32);color:#fff;}
+  .B-cta .ghost:hover{background:rgba(255,255,255,.2);}
+
+  /* ---------- BANDS ---------- */
+  .B-band{padding:62px 0;}
+  .B-band h2{font-family:var(--hfont);font-size:32px;font-weight:800;letter-spacing:-.01em;margin:12px 0 8px;}
+  .B-band .lede{font-size:15px;color:var(--ink-soft);max-width:560px;line-height:1.6;}
+
+  /* ---------- MISSION (inline hero reveal) ---------- */
+  .hero-toggle{margin-top:16px;background:none;border:none;padding:0;cursor:pointer;color:var(--green-soft);font-family:'Roboto',sans-serif;font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;gap:6px;}
+  .hero-toggle:hover{color:#9bdc4f;}
+  .hero-toggle-chev{transition:transform .3s ease;font-size:16px;line-height:1;}
+  .hero-toggle.open .hero-toggle-chev{transform:rotate(90deg);}
+  .hero-mission-reveal{max-height:0;overflow:hidden;opacity:0;transition:max-height .5s cubic-bezier(.4,0,.2,1),opacity .4s ease,margin-top .4s ease;}
+  .hero-mission-reveal.open{max-height:360px;opacity:1;margin-top:20px;}
+  .hero-mission-eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--green-soft);font-weight:700;margin-bottom:10px;}
+  .hero-mission-text{font-family:var(--hfont);font-size:18px;line-height:1.5;font-weight:600;color:#fff;letter-spacing:-.01em;}
+  .hero-mission-text .mk{background:linear-gradient(transparent 60%,rgba(119,188,31,.45) 0);padding:0 2px;}
+  @media(max-width:640px){.hero-mission-text{font-size:16px;} .hero-mission-reveal.open{max-height:560px;}}
+
+  /* ===================== ELECTIVE WEBINARS ===================== */
+  .wb-filters{display:flex;flex-wrap:wrap;gap:9px;margin:26px 0 30px;align-items:center;}
+  .wb-chip{font-family:var(--hfont);font-size:12.5px;font-weight:600;letter-spacing:.02em;
+    background:var(--navy-deep);color:var(--ink-soft);border:1px solid var(--navy-line);
+    border-radius:999px;padding:8px 16px;cursor:pointer;transition:all .16s ease;}
+  .wb-chip:hover{border-color:var(--green);color:var(--ink);}
+  .wb-chip.on{background:var(--green);color:#13210a;border-color:var(--green);}
+  .wb-filters .wb-lbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin-right:4px;}
+
+  .wb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:20px;}
+  .wb-card{position:relative;border-radius:18px;padding:22px;
+    display:flex;flex-direction:column;gap:14px;
+    background:linear-gradient(155deg,rgba(255,255,255,.92) 0%,rgba(255,255,255,.72) 100%);
+    backdrop-filter:blur(20px) saturate(140%);-webkit-backdrop-filter:blur(20px) saturate(140%);
+    border:1px solid rgba(255,255,255,.9);border-top-color:#fff;border-left-color:rgba(255,255,255,.95);
+    box-shadow:0 14px 34px -16px rgba(38,55,70,.28), inset 0 1px 0 rgba(255,255,255,.9);
+    transform:translateZ(0);
+    filter:saturate(.12) brightness(1.02);
+    transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease,filter .35s ease;}
+  .wb-card:hover{transform:translateY(-3px);border-color:rgba(119,188,31,.55);
+    box-shadow:0 22px 46px -16px rgba(38,55,70,.34), inset 0 1px 0 rgba(255,255,255,.95);
+    filter:saturate(1) brightness(1);}
+  .wb-card .wb-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;min-height:64px;}
+  .wb-card h3{font-family:var(--hfont);font-size:17px;font-weight:700;line-height:1.25;letter-spacing:-.01em;color:var(--navy);}
+  .wb-card .wb-host{font-size:11.5px;color:var(--label-dark);margin-top:3px;}
+  .wb-card .wb-overview{font-size:13.5px;color:var(--dark-gray);line-height:1.55;}
+  .wb-card .wb-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:auto;padding-top:4px;}
+  .wb-card.wb-hidden{display:none;}
+
+  .wb-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+  .wb-when{display:inline-flex;align-items:center;gap:7px;font-family:var(--hfont);font-weight:600;
+    font-size:12.5px;color:var(--navy);background:rgba(38,55,70,.07);border:1px solid rgba(38,55,70,.14);
+    border-radius:7px;padding:6px 12px;}
+  .wb-when .wb-dot{width:7px;height:7px;border-radius:50%;background:var(--green);transition:box-shadow .35s ease;}
+  .wb-card:hover .wb-when .wb-dot{box-shadow:0 0 0 3px rgba(119,188,31,.25), 0 0 10px 2px rgba(119,188,31,.7);}
+  .wb-dur{font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--label-dark);
+    border:1px solid rgba(38,55,70,.16);border-radius:6px;padding:5px 9px;}
+
+  .wb-zones{position:relative;display:flex;border:1px solid rgba(38,55,70,.14);border-radius:9px;overflow:hidden;background:rgba(38,55,70,.04);}
+  .wb-zones::before{content:"";position:absolute;top:0;bottom:0;width:60%;pointer-events:none;z-index:2;
+    background:linear-gradient(100deg,transparent 0%,rgba(119,188,31,.18) 50%,transparent 100%);
+    transform:translateX(-130%);opacity:0;}
+  .wb-card:hover .wb-zones::before{animation:wbShimmer 4.2s ease-in-out infinite;opacity:1;}
+  @keyframes wbShimmer{0%{transform:translateX(-130%);}55%,100%{transform:translateX(230%);}}
+  .wb-zone{flex:1;min-width:0;text-align:center;padding:7px 3px;border-right:1px solid rgba(38,55,70,.12);position:relative;z-index:1;}
+  .wb-zone:last-child{border-right:none;}
+  .wb-zone .wb-z{font-family:var(--hfont);font-size:9.5px;font-weight:700;letter-spacing:.04em;color:var(--label-dark);}
+  .wb-zone .wb-t{font-size:10.5px;color:var(--navy);margin-top:2px;white-space:nowrap;font-variant-numeric:tabular-nums;}
+
+  .wb-skills{display:flex;flex-wrap:wrap;gap:6px;}
+  .wb-skill{font-size:11px;font-weight:600;letter-spacing:.02em;color:#4d7314;
+    background:rgba(119,188,31,.14);border:1px solid rgba(119,188,31,.34);border-radius:5px;padding:3px 9px;}
+
+  .wb-reg{font-family:var(--hfont);font-weight:600;font-size:13.5px;letter-spacing:.01em;text-decoration:none;
+    background:var(--green);color:#13210a;border-radius:8px;padding:10px 18px;display:inline-flex;align-items:center;gap:6px;
+    transition:transform .14s ease,box-shadow .14s ease;white-space:nowrap;}
+  .wb-reg .arrow{display:inline-block;transition:transform .25s ease;}
+  .wb-card:hover .wb-reg{animation:wbBtnPulse 1.5s ease-in-out infinite;}
+  @keyframes wbBtnPulse{
+    0%,100%{box-shadow:0 0 0 0 rgba(119,188,31,.6);transform:scale(1);}
+    50%{box-shadow:0 0 0 11px rgba(119,188,31,0);transform:scale(1.035);}}
+  .wb-reg:hover{animation:none;transform:translateY(-1px) scale(1.04);box-shadow:0 10px 22px -8px rgba(119,188,31,.7);}
+  .wb-card:hover .wb-reg .arrow{transform:translate(2px,-2px);}
+  @media (prefers-reduced-motion:reduce){
+    .wb-card:hover .wb-zones::before,.wb-card:hover .wb-reg{animation:none;}
+  }
+
+  .wb-empty{color:var(--muted);font-size:14px;padding:30px 0;text-align:center;display:none;}
+  .wb-empty.show{display:block;}
+  @media(max-width:520px){.wb-zone .wb-z{font-size:8.5px;}.wb-zone .wb-t{font-size:9.5px;}}
+
+  .compare-tag{display:inline-block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;
+    padding:5px 11px;border-radius:999px;margin-bottom:18px;}
+
+  .hero-divider{background:#1d2b37;padding:4px 0;line-height:0;}
+  .hero-divider-inner{display:flex;align-items:center;gap:0;max-width:1140px;margin:0 auto;padding:0 32px;}
+  .hero-divider-line{flex:1;height:1px;background:rgba(119,188,31,0.25);}
+  .hero-divider-llama{width:28px;height:28px;flex:none;fill:#77BC1F;opacity:0.65;margin:0 12px;}
+
+  /* toolkit — Option A: gradient bridge + dark glass card */
+  .toolkit-paper{background:#1d2b37;padding:0;}
+  .toolkit-paper .seclabel{color:var(--green-soft);}
+
+  .tk-feature{padding:52px 56px;display:grid;grid-template-columns:1fr auto;gap:48px;align-items:center;}
+  .tk-feature-inner{flex:1;}
+  .tk-feature h3{font-family:var(--hfont);font-size:30px;line-height:1.1;font-weight:700;margin-bottom:12px;color:#fff;}
+  .tk-feature p{font-size:15px;line-height:1.6;color:rgba(255,255,255,.55);max-width:520px;margin-bottom:28px;}
+  .tk-feature a{display:inline-block;background:var(--green);color:#13260b;text-decoration:none;font-weight:700;font-size:14px;padding:14px 28px;border-radius:12px;white-space:nowrap;transition:transform .15s,background .15s;box-shadow:0 8px 24px -8px rgba(119,188,31,.4);}
+  .tk-feature a:hover{transform:translateY(-2px);background:#8DC648;}
+  .tk-stat{background:rgba(119,188,31,.1);border:1px solid rgba(119,188,31,.28);border-radius:16px;padding:28px 32px;text-align:center;flex:none;}
+  .tk-stat-num{font-family:var(--hfont);font-size:48px;font-weight:800;color:var(--green);line-height:1;}
+  .tk-stat-label{font-size:12px;color:rgba(255,255,255,.45);line-height:1.4;margin-top:8px;}
+  .helpful{margin-top:28px;display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .helpful-label{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-weight:700;}
+  .helpful a{color:var(--green-soft);text-decoration:none;font-size:13.5px;font-weight:600;}
+  .helpful a:hover{text-decoration:underline;}
+
+  /* libraries — LIGHT section */
+  .libraries .lede{color:var(--label-dark);}
+  .libraries .seclabel{color:var(--navy);}
+  .libraries .seclabel .mark svg path{fill:var(--green);}
+  .libraries h2{color:var(--navy);}
+  .lib-navy{background:var(--paper);border-top:3px solid var(--green);border-bottom:3px solid var(--green);}
+  /* webinars glass card inside libraries band */
+  .wb-glass{position:relative;margin-top:44px;border:1px solid rgba(255,255,255,.75);border-radius:20px;padding:32px;
+    box-shadow:0 8px 30px rgba(38,55,70,.10);overflow:hidden;
+    background-image:url('assets/panel.jpg');background-size:cover;background-position:center 38%;}
+  /* frosted, brand-tinted scrim sitting over the photo */
+  .wb-glass::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+    backdrop-filter:blur(4px) saturate(112%);-webkit-backdrop-filter:blur(4px) saturate(112%);
+    background:
+      linear-gradient(120deg,rgba(243,244,240,.62) 0%,rgba(243,244,240,.4) 45%,rgba(243,244,240,.26) 100%),
+      radial-gradient(110% 130% at 88% 18%,rgba(38,55,70,.10) 0%,rgba(38,55,70,0) 55%),
+      radial-gradient(90% 120% at 6% 92%,rgba(119,188,31,.08) 0%,rgba(119,188,31,0) 60%);}
+  .wb-glass>*{position:relative;z-index:1;}
+  .wb-glass .seclabel{color:var(--navy);}
+  .wb-glass .seclabel .mark svg path{fill:var(--green);}
+  .wb-glass h2{color:var(--navy);margin-top:6px;}
+  .wb-glass .lede{color:var(--navy);}
+  .wb-header{display:flex;align-items:center;gap:14px;cursor:pointer;user-select:none;}
+  .wb-header h2{margin:0;}
+  .wb-glass .lede{color:var(--navy);}
+  .wb-chevron{margin-left:auto;display:flex;align-items:center;color:var(--navy);transition:transform .3s;}
+  .wb-chevron svg{width:32px;height:32px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+  .wb-chevron.open{transform:rotate(180deg);}
+  /* whole panel is clickable to expand; interactive content inside keeps normal cursor */
+  .wb-glass{cursor:pointer;}
+  .wb-collapse{cursor:default;}
+  /* "click to expand" cue pill, pushed to the right beside the caret */
+  .wb-header .wb-chevron{margin-left:0;}
+  .wb-cue{margin-left:auto;font-size:12px;font-weight:600;letter-spacing:.01em;color:var(--navy);
+    background:rgba(38,55,70,.07);border:1px solid rgba(38,55,70,.16);border-radius:999px;
+    padding:5px 13px;white-space:nowrap;opacity:.8;transition:opacity .2s;}
+  .wb-glass:hover .wb-cue{opacity:1;}
+  /* caret bobs while collapsed to signal it drops down; stops once open */
+  @keyframes wbCaretPulse{0%,100%{transform:translateY(0);opacity:.7;}50%{transform:translateY(3px);opacity:1;}}
+  .wb-chevron:not(.open){animation:wbCaretPulse 1.7s ease-in-out infinite;}
+  @media (prefers-reduced-motion:reduce){.wb-chevron:not(.open){animation:none;}}
+  @media(max-width:640px){.wb-cue{display:none;}}
+  .wb-collapse{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1);}
+  .wb-collapse.open{max-height:4000px;}
+  .libgrid{margin-top:28px;display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;}
+  .libcard{position:relative;display:flex;align-items:flex-start;gap:18px;
+    background:#fff;
+    border:1px solid rgba(38,55,70,.12);border-top-color:rgba(38,55,70,.18);
+    border-radius:18px;padding:24px;text-decoration:none;color:var(--navy);cursor:pointer;
+    box-shadow:0 4px 16px -6px rgba(38,55,70,.12), inset 0 1px 0 rgba(255,255,255,.9);
+    transform:translateZ(0);will-change:transform;contain:paint;
+    transition:transform .18s,box-shadow .18s,background .18s,border-color .18s;}
+  .libcard:hover{transform:translateY(-3px);background:#fff;border-color:rgba(119,188,31,.6);
+    box-shadow:0 12px 32px -10px rgba(38,55,70,.18), inset 0 1px 0 rgba(255,255,255,.9);}
+  .libcard .ico{flex:none;width:64px;height:64px;display:flex;align-items:center;justify-content:center;}
+  .libcard .ico svg{width:60px;height:60px;}
+  .libcard .ico svg path,.libcard .ico svg circle,.libcard .ico svg rect,.libcard .ico svg line{
+    fill:none;stroke:var(--green);stroke-width:.5;stroke-linecap:round;stroke-linejoin:round;opacity:.5;transition:opacity .3s;}
+  .libcard:hover .ico svg path,.libcard:hover .ico svg circle,.libcard:hover .ico svg rect,.libcard:hover .ico svg line{opacity:1;}
+  .libcard .body{flex:1;padding-top:4px;}
+  .libcard h3{font-size:17px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:8px;color:var(--navy);}
+  .libcard h3 .pill{font-size:10px;letter-spacing:.06em;text-transform:uppercase;background:rgba(119,188,31,.18);color:#3d6b10;padding:3px 8px;border-radius:999px;font-weight:700;}
+  .libcard p{font-size:13.5px;color:var(--label-dark);line-height:1.5;}
+
+  /* icons sit drawn at rest; hover replays the redraw */
+  .draw path,.draw circle,.draw rect,.draw line{stroke-dasharray:var(--len);stroke-dashoffset:0;}
+  .libcard:hover .draw path,.libcard:hover .draw circle,.libcard:hover .draw rect,.libcard:hover .draw line,
+  .coolcard:hover .draw path,.coolcard:hover .draw circle,.coolcard:hover .draw rect,.coolcard:hover .draw line{
+    animation:redraw .9s ease;}
+  @keyframes redraw{from{stroke-dashoffset:var(--len);}to{stroke-dashoffset:0;}}
+
+  /* water cooler */
+  .cooler{position:relative;overflow:hidden;background:var(--navy-deep);border-top:none;}
+  .cooler .wrap{position:relative;z-index:2;}
+  .glow-blobs{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+  .glow-blobs .blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;}
+  .glow-blobs .b1{width:380px;height:380px;background:#77BC1F;top:-160px;left:-4%;opacity:.32;}
+  .glow-blobs .b2{width:380px;height:380px;background:#2172B7;top:120px;right:6%;opacity:.42;}
+  .glow-blobs .b3{width:320px;height:320px;background:#009D66;bottom:-80px;left:42%;opacity:.4;}
+  .coolgrid{margin-top:28px;display:grid;gap:16px;}
+  .coolgrid-spotify{display:grid;grid-template-columns:1fr;}
+  .coolgrid-row1{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .coolgrid-row2{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;}
+  .coolcard{background:rgba(255,255,255,.07);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+    border:1px solid rgba(255,255,255,.18);border-top-color:rgba(255,255,255,.32);border-radius:18px;padding:24px;
+    transform:translateZ(0);contain:paint;
+    box-shadow:0 10px 30px -12px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.12);transition:transform .18s,background .18s,border-color .18s;}
+  .coolcard:hover{transform:translateY(-3px);background:rgba(255,255,255,.11);border-color:rgba(119,188,31,.5);}
+  .coolcard-sm{padding:18px 20px;}
+  /* icon block — visible at rest, draw brightens on hover */
+  .coolcard .ic-block{
+    width:52px;height:52px;border-radius:14px;margin-bottom:14px;
+    background:rgba(119,188,31,.08);border:1px solid rgba(119,188,31,.18);
+    display:flex;align-items:center;justify-content:center;
+    transition:background .2s,border-color .2s;}
+  .coolcard:hover .ic-block{background:rgba(119,188,31,.18);border-color:rgba(119,188,31,.4);}
+  .coolcard-sm .ic-block{width:40px;height:40px;border-radius:10px;margin-bottom:10px;}
+  .coolcard .ic-block svg{width:32px;height:32px;}
+  .coolcard-sm .ic-block svg{width:24px;height:24px;}
+  .coolcard .ic-block svg path:not([stroke="none"]),.coolcard .ic-block svg circle,.coolcard .ic-block svg rect,.coolcard .ic-block svg line{
+    fill:none;stroke:var(--green);stroke-width:.5;stroke-linecap:round;stroke-linejoin:round;
+    opacity:1;transition:filter .3s;}
+  .coolcard:hover .ic-block svg path:not([stroke="none"]),.coolcard:hover .ic-block svg circle,.coolcard:hover .ic-block svg rect,.coolcard:hover .ic-block svg line{
+    filter:drop-shadow(0 0 5px rgba(119,188,31,.55));}
+  .coolcard h3{font-size:16px;font-weight:700;margin-bottom:8px;color:var(--ink);}
+  .coolcard-sm h3{font-size:14px;margin-bottom:6px;}
+  .coolcard p{font-size:13px;color:var(--ink-soft);line-height:1.5;}
+  .coolcard-sm p{font-size:12px;}
+  .coolcard a{color:var(--green-soft);text-decoration:none;font-size:13px;font-weight:600;display:inline-block;margin-top:12px;}
+  .coolcard-sm a{font-size:12px;margin-top:8px;}
+  /* ---------- LLAMA HOROSCOPE MODAL ---------- */
+  .horo-intro{font-size:13.5px;color:var(--label-dark);margin-bottom:16px;}
+  .horo-signs{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:4px;}
+  .horo-sign{display:flex;align-items:center;gap:12px;text-align:left;background:#f4f6f1;border:1px solid #e2e6dc;border-radius:12px;padding:13px 15px;cursor:pointer;transition:border-color .15s,background .15s;}
+  .horo-sign:hover{border-color:var(--green);background:#eef4e4;}
+  .horo-sign.on{border-color:var(--green);background:#eef4e4;box-shadow:0 0 0 1px var(--green);}
+  .horo-sign .hs-ic{width:34px;height:34px;flex:none;border-radius:9px;background:#fff;border:1px solid #e2e6dc;display:flex;align-items:center;justify-content:center;}
+  .horo-sign .hs-ic svg{width:20px;height:20px;fill:none;stroke:var(--navy);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+  .horo-sign.on .hs-ic svg,.horo-sign:hover .hs-ic svg{stroke:#5a8a13;}
+  .horo-sign .hs-t{display:block;font-weight:700;font-size:14px;color:var(--navy);line-height:1.2;margin-bottom:3px;}
+  .horo-sign .hs-s{display:block;font-size:11.5px;color:var(--label-dark);line-height:1.2;}
+  .horo-result{margin-top:18px;border-top:1px solid #e6e9e2;padding-top:18px;display:none;}
+  .horo-result.show{display:block;}
+  /* starfield reveal stage */
+  .horo-stage{position:relative;height:118px;margin-bottom:8px;display:flex;align-items:center;justify-content:center;}
+  .horo-constellation{position:absolute;inset:0;width:100%;height:100%;}
+  .horo-constellation .horo-glyph{fill:none;stroke:var(--green);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+    opacity:0;transform-box:fill-box;}
+  .horo-constellation.draw .horo-glyph{
+    animation:horoReveal .6s ease forwards var(--d,0s),
+              horoGlyphTwinkle var(--tw,3s) ease-in-out infinite calc(var(--d,0s) + .6s);}
+  @keyframes horoReveal{0%{opacity:0;}100%{opacity:.85;}}
+  @keyframes horoGlyphTwinkle{0%,100%{opacity:.85;}50%{opacity:.3;}}
+  .horo-casting{position:absolute;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--green);font-weight:700;opacity:0;animation:horoCast 1.6s ease;}
+  @keyframes horoCast{0%{opacity:0;}25%{opacity:.85;}75%{opacity:.85;}100%{opacity:0;}}
+  .horo-reveal{opacity:0;}
+  .horo-reveal.in{animation:horoIn .7s ease forwards;}
+  @keyframes horoIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:none;}}
+  .horo-result .hr-head{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+  .horo-result .hr-head .hr-ic{width:30px;height:30px;flex:none;}
+  .horo-result .hr-head .hr-ic svg{width:30px;height:30px;fill:none;stroke:#5a8a13;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;}
+  .horo-result .hr-name{font-family:var(--hfont);font-size:18px;font-weight:700;color:var(--navy);}
+  .horo-text{font-size:15.5px;line-height:1.62;color:var(--navy);margin-bottom:16px;}
+  .horo-stats{display:flex;gap:24px;border-top:1px solid #eceee8;padding-top:14px;}
+  .horo-stat .hst-l{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--label-dark);margin-bottom:3px;}
+  .horo-stat .hst-v{font-size:14px;font-weight:600;color:var(--navy);}
+  .horo-again{margin-top:16px;}
+  .horo-again button{background:#f4f6f1;border:1px solid #e2e6dc;color:#5a8a13;font-weight:600;font-size:12.5px;border-radius:9px;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:border-color .15s,background .15s;}
+  .horo-again button:hover{border-color:var(--green);background:#eef4e4;}
+  /* spotify card — full-width, always-visible header + slide-down player */
+  .spotify-card{cursor:default;padding:0;overflow:hidden;}
+  .spotify-card:hover{transform:none;}
+  .spotify-header{display:flex;align-items:center;gap:16px;padding:20px 24px;cursor:pointer;transition:background .15s;}
+  .spotify-header:hover{background:rgba(255,255,255,.04);}
+  .spotify-header .ic-block{margin-bottom:0;flex:none;}
+  .spotify-header .ic-block svg path{opacity:.7;}
+  .spotify-header:hover .ic-block{background:rgba(119,188,31,.18);border-color:rgba(119,188,31,.4);}
+  .spotify-header:hover .ic-block svg path{opacity:1;}
+  .spotify-header-text{flex:1;}
+  .spotify-header-text h3{font-size:16px;font-weight:700;margin:0;color:var(--ink);}
+  .spotify-header-text p{font-size:13px;color:var(--ink-soft);margin-top:2px;}
+  .spotify-chevron{font-size:18px;color:var(--green-soft);transition:transform .3s;line-height:1;user-select:none;}
+  .spotify-chevron.open{transform:rotate(180deg);}
+  .spotify-panel{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.4,0,.2,1);}
+  .spotify-panel.open{max-height:420px;}
+  .spotify-panel-inner{padding:0 20px 20px;}
+  .spotify-panel-inner iframe{display:block;border-radius:12px;}
+
+  /* footer */
+  .B-foot{background:var(--navy-deep);border-top:1px solid rgba(255,255,255,.07);padding:32px 0;}
+  .foot-links{display:block;padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid rgba(255,255,255,.07);}
+  .foot-links .helpful-label{display:block;margin-bottom:12px;}
+  .foot-cols{display:grid;grid-template-columns:repeat(3,max-content);gap:9px 40px;}
+  .foot-links a{color:var(--ink-soft);text-decoration:none;font-size:12px;font-weight:500;transition:color .15s;}
+  .foot-links a:hover{color:var(--green-soft);text-decoration:underline;}
+  .B-foot .wrap{display:flex;align-items:center;gap:13px;}
+  .B-foot .llama-mark{width:34px;height:34px;}
+  .B-foot p{margin-left:auto;font-size:12.5px;color:var(--muted);}
+
+  /* ---------- MODAL ---------- */
+  .modal-scrim{position:fixed;inset:0;z-index:400;background:rgba(15,23,30,.66);backdrop-filter:blur(3px);
+    display:none;align-items:flex-start;justify-content:center;padding:60px 20px;overflow-y:auto;}
+  .modal-scrim.open{display:flex;}
+  .modal{background:#fff;color:var(--navy);width:100%;max-width:560px;border-radius:16px;overflow:hidden;
+    box-shadow:0 30px 70px -20px rgba(0,0,0,.6);}
+  .modal-head{background:var(--navy);color:#fff;padding:20px 24px;display:flex;align-items:center;gap:12px;}
+  .modal-head .mark{width:24px;height:24px;flex:none;}
+  .modal-head .mark svg path{fill:var(--green-soft);}
+  .modal-head h3{font-family:var(--hfont);font-size:19px;font-weight:800;flex:1;}
+  .modal-head .x{background:rgba(255,255,255,.12);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:18px;line-height:1;}
+  .modal-body{padding:22px 24px 26px;max-height:60vh;overflow-y:auto;}
+  .ac-search{width:100%;border:1px solid #d8dad2;border-radius:10px;padding:11px 14px;font-size:14px;margin-bottom:6px;font-family:inherit;}
+  .ac-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+  .ac-tab{border:1px solid #d8dad2;background:#fff;color:var(--dark-gray);font-size:12.5px;font-weight:600;
+    padding:6px 14px;border-radius:999px;cursor:pointer;font-family:inherit;transition:.15s;}
+  .ac-tab:hover{border-color:#77BC1F;}
+  .ac-tab.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .ac-src{font-size:12px;color:var(--muted);margin-bottom:14px;}
+  .ac-src a{color:#5e8a1a;text-decoration:none;font-weight:600;}
+  .ac-group{margin-bottom:8px;}
+  .ac-h{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:#5e8a1a;font-weight:700;margin:16px 0 4px;padding-bottom:5px;border-bottom:1px solid #eceee7;}
+  .ac-none{font-size:14px;color:var(--dark-gray);padding:14px 2px;}
+
+  /* ===== (Quick Launch merged into footer) ===== */
+  .pal-tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:18px;border-bottom:1px solid #eceee7;padding-bottom:14px;}
+  .pal-tab{border:1px solid #d8dad2;background:#fff;color:var(--dark-gray);font-size:12.5px;font-weight:600;padding:7px 11px;border-radius:999px;cursor:pointer;font-family:inherit;transition:.15s;}
+  .pal-tab:hover{border-color:var(--green);}
+  .pal-tab.on{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .pal-pane{display:none;}
+  .pal-pane.on{display:block;animation:palfade .2s ease;}
+  @keyframes palfade{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:none;}}
+  .pal-h{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#5e8a1a;font-weight:700;margin:18px 0 10px;}
+  .pal-hint{font-size:13px;color:var(--dark-gray);margin-bottom:14px;line-height:1.5;}
+  .pal-fmt{display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+  .pal-fmt-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--label-dark);font-weight:700;margin-right:4px;}
+  .fmt-btn{border:1px solid #d8dad2;background:#fff;color:var(--dark-gray);font-size:12px;font-weight:700;padding:5px 12px;border-radius:8px;cursor:pointer;font-family:inherit;}
+  .fmt-btn.on{background:var(--green);color:#13260b;border-color:var(--green);}
+  .sw-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:10px;}
+  .sw{position:relative;border:none;border-radius:14px;padding:16px 14px 14px;min-height:88px;text-align:left;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);transition:transform .12s;overflow:hidden;}
+  .sw:hover{transform:translateY(-2px);}
+  .sw-name{font-weight:700;font-size:14px;}
+  .sw-val{font-size:12px;opacity:.85;font-variant-numeric:tabular-nums;}
+  .sw-copied{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.55);color:#fff;font-weight:700;font-size:13px;opacity:0;transition:.15s;border-radius:14px;}
+  .sw.copied .sw-copied,.sh-chip.copied .sw-copied{opacity:1;}
+  .ct-pickers{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
+  .ct-pick{display:flex;flex-direction:column;gap:5px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--label-dark);font-weight:700;flex:1;min-width:130px;}
+  .ct-pick.wide{max-width:260px;}
+  #pane-shades .ct-pick.wide{margin-bottom:18px;}
+  .ct-pick select{font-family:inherit;font-size:14px;font-weight:600;padding:9px 11px;border:1px solid #d8dad2;border-radius:9px;background:#fff;color:var(--navy);cursor:pointer;text-transform:none;letter-spacing:0;}
+  .ct-pick select option{color:var(--navy);}
+  .ct-swap{align-self:flex-end;border:1px solid #d8dad2;background:#fff;border-radius:9px;width:40px;height:39px;font-size:17px;cursor:pointer;color:var(--dark-gray);}
+  .ct-swap:hover{border-color:var(--green);color:var(--green);}
+  .ct-preview{border-radius:14px;padding:26px 24px;display:flex;flex-direction:column;gap:8px;margin-bottom:14px;border:1px solid rgba(0,0,0,.08);}
+  .ct-big{font-family:var(--hfont);font-size:40px;font-weight:700;line-height:1;}
+  .ct-sample{font-size:16px;font-weight:600;}
+  .ct-small{font-size:13px;opacity:.92;}
+  .ct-readout{display:flex;align-items:center;gap:20px;flex-wrap:wrap;}
+  .ct-ratio{display:flex;flex-direction:column;}
+  .ct-ratio span:first-child{font-family:var(--hfont);font-size:26px;font-weight:700;color:var(--navy);font-variant-numeric:tabular-nums;}
+  .ct-ratio-l{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--label-dark);font-weight:700;}
+  .ct-badges{display:flex;gap:7px;flex-wrap:wrap;}
+  .ct-badge{font-size:11.5px;font-weight:700;padding:5px 10px;border-radius:7px;}
+  .ct-badge.pass{background:#e8f5d8;color:#3c6b0e;}
+  .ct-badge.fail{background:#f6e0dc;color:#a23a28;}
+  .sh-row{display:grid;grid-template-columns:repeat(7,1fr);gap:7px;}
+  .sh-chip{position:relative;border:none;border-radius:11px;min-height:74px;cursor:pointer;font-family:inherit;display:flex;flex-direction:column;justify-content:flex-end;padding:9px;text-align:left;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06);}
+  .sh-chip.base{outline:2px solid var(--navy);outline-offset:2px;}
+  .sh-l{font-size:11px;font-weight:700;opacity:.8;}
+  .sh-h{font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;}
+  .sh-chip .sw-copied{border-radius:11px;}
+  .gr-preview{height:120px;border-radius:14px;margin-bottom:12px;border:1px solid rgba(0,0,0,.08);}
+  .gr-css{display:flex;align-items:center;justify-content:space-between;gap:12px;background:#f5f6f2;border:1px solid #e4e6df;border-radius:10px;padding:12px 14px;}
+  .gr-css code{font-size:12.5px;color:var(--navy);word-break:break-all;font-family:ui-monospace,Menlo,Consolas,monospace;}
+  .copy-mini,.pal-export-btn{border:none;background:var(--green);color:#13260b;font-weight:700;font-family:inherit;cursor:pointer;border-radius:8px;}
+  .copy-mini{font-size:12px;padding:8px 14px;flex:none;}
+  .ex-code{background:#1c2a35;color:#dfe7c9;border-radius:12px;padding:18px 20px;font-size:13px;line-height:1.7;font-family:ui-monospace,Menlo,Consolas,monospace;overflow-x:auto;margin-bottom:14px;}
+  .pal-export-btn{font-size:14px;padding:13px 22px;}
+  .res-list{display:flex;flex-direction:column;gap:8px;margin-bottom:6px;}
+  .res-link{display:flex;flex-direction:column;gap:3px;padding:14px 16px;border-radius:11px;text-decoration:none;
+    background:#f5f6f2;border:1px solid #e4e6df;transition:.15s;}
+  .res-link:hover{border-color:var(--green);background:#f0f6e8;}
+  .res-t{font-weight:700;font-size:14px;color:var(--navy);}
+  .res-d{font-size:12.5px;color:var(--dark-gray);}
+  @media(max-width:560px){.sh-row{grid-template-columns:repeat(4,1fr);}}
+  .modal-wide{max-width:680px;}
+  .ac-row{display:grid;grid-template-columns:120px 1fr;gap:14px;padding:12px 2px;border-top:1px solid #eceee7;}
+  .ac-row:first-of-type{border-top:none;}
+  .ac-term{font-family:'Sora',monospace;font-weight:700;color:#5e8a1a;font-size:14px;}
+  .ac-def{font-size:14px;color:var(--dark-gray);line-height:1.5;}
+  .okr-item{padding:14px 0;border-top:1px solid #eceee7;}
+  .okr-item:first-child{border-top:none;}
+  .okr-item .o{font-weight:700;font-size:15px;margin-bottom:4px;}
+  .okr-item .kr{font-size:13px;color:var(--dark-gray);line-height:1.5;}
+  .okr-soon{background:rgba(255,131,0,.12);color:#a85600;font-size:12px;font-weight:700;padding:10px 14px;border-radius:10px;margin-bottom:16px;}
+  .okr-lead{font-size:13px;color:var(--muted);line-height:1.5;margin-bottom:6px;}
+  .okr-obj{font-size:13px;color:var(--dark-gray);line-height:1.55;margin-bottom:11px;}
+  .okr-krlabel{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:6px;}
+  .okr-krlist{margin:0;padding-left:18px;}
+  .okr-krlist li{font-size:13px;color:var(--dark-gray);line-height:1.5;margin-bottom:4px;}
+
+
+  @media(max-width:640px){
+    .B-hero h1{font-size:40px;}
+    .B-nav nav{display:none;}
+    .tk-banner{flex-direction:column;align-items:flex-start;}
+    .ac-row{grid-template-columns:88px 1fr;gap:10px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<div class="B-hero">
+  <div class="B-nav">
+    <div class="wrap">
+      <span class="llama-mark" id="navLlama"></span>
+      <div class="brandname">Conservice<span>Instructional Design Hub</span></div>
+      <nav><a href="#toolkit">Toolkit</a><a href="#libraries">Libraries</a><a href="#webinars">Webinars</a><a href="#cooler">Water Cooler</a></nav>
+    </div>
+  </div>
+
+  <div class="B-hero-bg" aria-hidden="true"></div>
+  <div class="B-hero-scrim" aria-hidden="true"></div>
+
+  <div class="wrap B-hero-inner">
+    <div class="B-glass">
+      <div class="B-kicker">Learning &amp; Development</div>
+      <h1 id="heroTitle">Everything the <em>Llama League</em> needs,&nbsp;one&nbsp;place.</h1>
+      <p class="hero-sub">Built for the people who build the learning.</p>
+      <div class="B-cta">
+        <a class="primary" href="#libraries">Browse the libraries</a>
+        <a class="ghost" href="https://conservice989398.monday.com/boards/9554096232" target="_blank" rel="noopener"><img src="icon-monday.svg" alt="" width="16" height="16" style="vertical-align:-3px;margin-right:8px;">Open Llamaland ↗</a>
+      </div>
+      <button class="hero-toggle" id="heroToggle" onclick="toggleHero()" aria-expanded="false"><span id="heroToggleLabel">Read our mission</span><span class="hero-toggle-chev">&rsaquo;</span></button>
+      <div class="hero-mission-reveal" id="missionReveal">
+        <div class="hero-mission-eyebrow">Our Mission</div>
+        <p class="hero-mission-text">To design and deliver world-class instructional solutions that <span class="mk">empower employees</span>, <span class="mk">enhance their skills</span>, and <span class="mk">drive performance</span>. Through collaboration with our internal business partners, we strive to provide exceptional service and develop top-tier talent that contributes to the company&rsquo;s success.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ TOOLKIT ============ -->
+<div class="hero-divider" aria-hidden="true">
+  <div class="hero-divider-inner">
+    <div class="hero-divider-line"></div>
+    <svg class="hero-divider-llama" viewBox="-5.0 -10.0 110.0 135.0" xmlns="http://www.w3.org/2000/svg">
+      <path d="m29.105 77.879c-0.51172 0.65234-0.98438 1.332-1.5508 1.9375 0.10937 4.5547 1.3828 11.375 3.2852 15.523 0.29688 0.65234 0.61328 1.4219 1.1406 1.9258 0.72656 0.69141 2.1094 0.56641 3.0469 0.59375l0.70703 0.023437c0.023437-0.40625 0.18359-1.4492-0.078125-1.7656-0.30078-0.35938-0.91797-0.50391-1.2773-0.85938-1.5391-1.5234-1.8789-3.9648-1.9805-6.0352-0.10938-2.1523-0.11719-4.4219 0.4375-6.5195 0.73828-2.7812 2.1055-4.3477 3.4844-6.7109 0.16406-0.28516 0.32422-0.57422 0.48047-0.86328 0.15625-0.29297 0.30078-0.58594 0.44531-0.88281 0.14453-0.29688 0.27734-0.59375 0.40625-0.89844 0.12891-0.30469 0.25391-0.60547 0.37109-0.91406 0.11719-0.30469 0.23047-0.61719 0.33594-0.92969s0.20703-0.625 0.29688-0.94141c0.089844-0.3125 0.18359-0.63281 0.26172-0.95312s0.15625-0.64062 0.22266-0.96094c-1.2461-0.49609-2.7109-0.93359-3.8867-1.5352-1.3477 3.9609-3.582 7.4883-6.1484 10.762z"/>
+      <path d="m80.043 12.555c-1.3359-0.76563-1.9531-2.293-3.043-3.3164-0.63672-0.59766-1.4961-1.0273-2.2734-1.4219 0.63672-1.5234 1.1289-2.9805 1.2539-4.6445 0.023437-0.30078 0.070312-0.65234-0.039063-0.94141-0.042968-0.10938-0.10938-0.21094-0.21875-0.26562-0.1875-0.085938-0.41406-0.015625-0.58594 0.066406-1.2305 0.58203-2.8242 2.2969-3.5586 3.4258-0.35938 0.55469-0.63672 1.1875-1.0234 1.7227 0.13281-2.0391 0.125-3.7148-0.47656-5.6992-0.13672-0.44531-0.26562-0.95312-0.58594-1.3008-0.11719-0.13281-0.20703-0.17969-0.38672-0.18359h-0.11719c-0.47266 0.38672-0.82031 0.99219-1.1484 1.5039-1.4961 2.3516-2.1719 4.293-2.4922 7.0703-3.1172 3.2656-3.2305 8.5703-3.1328 12.809 0.070312 2.1406 0.18359 4.2812 0.34375 6.418 0.3125 4.4023 1.2031 12.379-2.0312 15.809-1.2656 1.3438-3.0859 1.875-4.8867 1.918-2.8984 0.074218-6.5117-0.85156-9.3984-1.4102-5.9102-1.1445-13.688-1.6914-19.574-0.23047-0.73828-1.2969-1.7578-2.0391-3.2031-2.4336-1.7969-0.48828-3.8047-0.31641-5.4258 0.61719-1.4883 0.85938-2.5664 2.3477-2.9961 4.0039-0.38672 1.4883-0.32031 3.5977 0.49219 4.9492 0.20312 0.33203 0.49219 0.70312 0.89453 0.80078 0.20703 0.050782 0.45312 0.039063 0.63281-0.089843 0.21875-0.16016 0.32812-0.44531 0.41016-0.69141 0.11719-0.35937 0.21094-0.75391 0.39844-1.082 0.61328-1.082 1.9297-1.3125 3.0508-1.4727-0.48438 0.89844-0.93359 1.7969-1.2539 2.7734-1.2695 3.8711-0.97266 8.3672-0.12891 12.293 0.48047 2.2344 1.1211 4.4531 1.1055 6.7578-0.015625 1.8555-0.29297 3.8477-0.94922 5.5859-0.42578 1.1328-0.98437 2.2109-1.2734 3.3906-0.60547 2.4648 0.60547 10.105 1.1758 12.91 0.27734 1.3477 0.61328 2.6836 1.0078 4 0.30078 1.0117 0.59375 2.4844 1.6094 3.0156 0.94531 0.49219 2.6445 0.55859 3.7188 0.58594v-1.9648c-1.0508-0.5-1.8789-1.082-2.2891-2.2109-0.89062-2.457-0.60547-8.6445-0.0625-11.281 0.16797-0.81641 0.41406-1.6016 0.77344-2.3555 0.91406-1.9297 2.4531-3.6367 3.7617-5.3164 2.5508-3.2656 5.1953-7.3828 6.2812-11.422 3.9805 1.5391 7.9883 2.9023 12.195 3.6836 2.3203 0.46094 4.6562 0.84375 7.0039 1.1484 1.375 0.17969 2.7891 0.28125 4.1523 0.55469 1.1133 6.2578 1.7812 12.535 2.3867 18.859 0.18359 1.9062 0.35547 3.8086 0.51953 5.7188 0.078125 0.94141 0.078125 1.9766 0.25391 2.9023 0.09375 0.48828 0.34766 1.0273 0.76562 1.3164 0.69922 0.48437 3.1484 0.55859 4.0742 0.57812 0.054688-0.63672 0.20312-1.3633-0.24609-1.8984-0.26172-0.3125-0.64062-0.50781-0.95312-0.77344-0.85156-0.72266-0.74219-1.957-0.67578-2.9609 0.066406-1.0156 0.18359-2.0273 0.27734-3.0391 0.19141-2.3438 0.41406-4.6836 0.66797-7.0195 0.16406-1.5625 0.23047-3.4258 0.58203-4.9297 0.058594 1.5938 0.25391 3.1797 0.39844 4.7656l0.51172 6.125 0.35938 4.0117c0.070313 0.77344 0.09375 1.5898 0.25391 2.3516 0.078125 0.37891 0.25781 0.71875 0.53906 0.98828 0.23828 0.23438 0.54688 0.37891 0.86719 0.46875 0.83984 0.22656 2.6836 0.27344 3.6602 0.38672 0.066406-0.60938 0.25-1.3516-0.17969-1.8633-0.21484-0.25781-0.53906-0.45312-0.80078-0.66016-1.1758-0.91406-1.3008-1.6562-1.2188-3.0781 0.10938-1.7891 0.33203-3.582 0.50391-5.3672 0.32422-3.5977 0.67578-7.1914 1.0508-10.785 0.26172-2.4766 0.60547-4.9648 0.79297-7.4414 1.0195-1.0273 1.8906-2.1641 2.6914-3.3672 2.9609-4.4453 3.7344-8.9336 3.7109-14.188-0.027344-6.7812-1.457-13.484-3.0195-20.051-0.67188-2.8164-1.5273-5.7188-1.9414-8.5859-0.089843-0.63281-0.27734-1.9492 0.23828-2.4492 0.72656-0.70703 3.4531-0.87891 4.457-0.83203 1.668 0.070313 3.5938 1.2148 5.0508-0.085937 0.35938-0.32422 1.0547-1 1.0664-1.5156 0.003907-0.27734-0.13281-0.53906-0.23828-0.78516 0.49219-0.30859 0.83984-0.60938 0.97266-1.207 0.09375-0.41406 0.078125-0.98828-0.18359-1.3477-0.4375-0.60156-3.9805-1.7695-4.9023-2.3008zm-5.6406-0.11719c0 0.042969-0.003906 0.085938-0.015625 0.125-0.007813 0.042969-0.015625 0.085938-0.023438 0.125-0.011719 0.042969-0.023437 0.082031-0.039062 0.12109-0.015625 0.042968-0.03125 0.078125-0.050781 0.11719-0.20313 0.40234-0.52734 0.57812-0.9375 0.71094-0.26953 0.011719-0.51953 0.011719-0.77344-0.10156-0.32422-0.14453-0.57812-0.41406-0.6875-0.75391-0.011719-0.039062-0.023438-0.074219-0.03125-0.11328-0.007812-0.039063-0.015625-0.078125-0.019531-0.11719-0.003907-0.039062-0.003907-0.078125-0.003907-0.11719 0-0.042969 0-0.078125 0.003907-0.11719 0.003906-0.039062 0.007812-0.078125 0.015625-0.11719 0.007812-0.039063 0.015625-0.078125 0.027344-0.11328 0.011718-0.039063 0.023437-0.074219 0.039062-0.10938 0.015625-0.035156 0.03125-0.070312 0.050781-0.10937 0.21094-0.40625 0.55078-0.60156 0.96875-0.74609 0.25781-0.015625 0.50391 0.003906 0.74219 0.10938 0.039062 0.015625 0.074219 0.035156 0.10938 0.054687 0.035156 0.019532 0.070312 0.042969 0.10547 0.066406 0.03125 0.023438 0.066407 0.050782 0.097657 0.078126 0.03125 0.027343 0.0625 0.054687 0.089843 0.085937 0.027344 0.03125 0.054688 0.0625 0.078126 0.09375 0.023437 0.03125 0.050781 0.066406 0.070312 0.10156 0.023438 0.035156 0.042969 0.070312 0.0625 0.10937 0.019531 0.035157 0.03125 0.074219 0.050781 0.11328 0.015625 0.042968 0.027344 0.078125 0.039063 0.12109 0.011718 0.042968 0.019531 0.082031 0.023437 0.125 0.003907 0.042968 0.011719 0.085937 0.015625 0.125v0.12891z"/>
+    </svg>
+    <div class="hero-divider-line"></div>
+  </div>
+</div>
+
+<div class="B-band toolkit-paper" id="toolkit">
+  <div class="wrap">
+    <div class="tk-feature">
+      <div class="tk-feature-inner">
+        <div class="seclabel" style="margin-bottom:16px;">The Toolkit</div>
+        <h3>Calculators, estimators, and planners for instructional designers.</h3>
+        <p>Replaces the manual spreadsheets and back-of-napkin math for project scoping, hour estimates, and timeline planning.</p>
+        <a href="https://tools-n-things.github.io/id-toolkit/" target="_blank" rel="noopener">Open the ID Toolkit ↗</a>
+      </div>
+      <div class="tk-stat">
+        <div class="tk-stat-num">6+</div>
+        <div class="tk-stat-label">tools built for<br>the ID workflow</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ LIBRARIES ============ -->
+
+<div class="B-band libraries lib-navy" id="libraries">
+  <div class="wrap">
+    <div class="seclabel"><span class="mark llama-mark"></span>Libraries</div>
+    <h2>What you need, when you need it.</h2>
+    <p class="lede">Templates, SOPs, and past projects — organized, searchable, and ready when you are.</p>
+    <div class="libgrid">
+      <a class="libcard" href="field-manual.html" target="_blank" rel="noopener"><div class="ico"><svg class="draw" viewBox="0 0 24 24"><path d="M4 16.5a2.5 2.5 0 0 0 5 0a1.5 1.5 0 0 0 -1.5 -1.5h-2a1.5 1.5 0 0 0 -1.5 1.5"/><path d="M15 18.5a2.5 2.5 0 0 0 5 0a1.5 1.5 0 0 0 -1.5 -1.5h-2a1.5 1.5 0 0 0 -1.5 1.5"/><path d="M8.52 12h-4.04c-.348 0 -.678 -.179 -.823 -.496c-1.326 -2.904 -.774 -8.504 2.843 -8.504s4.17 5.6 2.843 8.504c-.145 .317 -.475 .496 -.824 .496"/><path d="M19.52 14h-4.04c-.348 0 -.678 -.179 -.823 -.496c-1.326 -2.904 -.774 -8.504 2.843 -8.504s4.17 5.6 2.843 8.504c-.145 .317 -.475 .496 -.824 .496"/></svg></div><div class="body"><h3>SOP Library ↗</h3><p>Standard operating procedures for every ID workflow.</p></div></a>
+      <a class="libcard" href="https://drive.google.com/drive/folders/1TnOSodH5vJyyJgHGlC_cDIKeSrTFdePy" target="_blank" rel="noopener"><div class="ico"><svg class="draw" viewBox="0 0 24 24"><path d="M6 21h6"/><path d="M9 21v-18l-6 6h18"/><path d="M9 3l10 6"/><path d="M17 9v4a2 2 0 1 1 -2 2"/></svg></div><div class="body"><h3>2026 Project Library ↗</h3><p>Active and shipped projects, all in one place.</p></div></a>
+      <a class="libcard" href="https://drive.google.com/drive/folders/1jsZk7oO7ztrLRkJMeh9pJgqqMGHyPmBQ" target="_blank" rel="noopener"><div class="ico"><svg class="draw" viewBox="0 0 24 24"><path d="M7 9.667a2.667 2.667 0 0 1 2.667 -2.667h8.666a2.667 2.667 0 0 1 2.667 2.667v8.666a2.667 2.667 0 0 1 -2.667 2.667h-8.666a2.667 2.667 0 0 1 -2.667 -2.667l0 -8.666"/><path d="M4.012 16.737a2 2 0 0 1 -1.012 -1.737v-10c0 -1.1 .9 -2 2 -2h10c.75 0 1.158 .385 1.5 1"/><path d="M11 14h6"/><path d="M14 11v6"/></svg></div><div class="body"><h3>Template Library ↗</h3><p>Storyboards, scripts, and course shells to copy.</p></div></a>
+      <a class="libcard" href="https://docs.google.com/document/d/1shSCZc2SpWoyN_YYH_nFdsJ7WbZR2uUqewNyHNMeE98/edit?usp=sharing" target="_blank" rel="noopener"><div class="ico"><svg class="draw" viewBox="0 0 24 24"><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6"/><path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4"/></svg></div><div class="body"><h3>LMS Request Guide ↗</h3><p>Submit and track a new course request.</p></div></a>
+      <div class="libcard" onclick="openModal('mAcro')"><div class="ico"><svg class="draw" viewBox="0 0 24 24"><path d="M5 8a2 2 0 0 1 2 2v4a2 2 0 1 1 -4 0v-4a2 2 0 0 1 2 -2"/><path d="M6 15l1 1"/><path d="M21 8h-4v8h4"/><path d="M17 12h2.5"/><path d="M10 8v6a2 2 0 1 0 4 0v-6"/></svg></div><div class="body"><h3>Acronyms &amp; Terms <span class="pill">popup</span></h3><p>Searchable glossary — opens right here, no new page.</p></div></div>
+      <div class="libcard" onclick="openModal('mOkr')"><div class="ico"><svg class="draw" viewBox="0 0 24 24"><path d="M21 3l-5 9h5l-6.891 7.086a6.5 6.5 0 1 1 -8.855 -9.506l7.746 -6.58l-1 5l9 -5"/><path d="M7 14.5a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0"/></svg></div><div class="body"><h3>2026 OKRs <span class="pill">popup</span></h3><p>Team objectives and key results — opens in a popup.</p></div></div>
+      <div class="libcard" onclick="openModal('mPalette')"><div class="ico"><svg class="draw" viewBox="0 0 24 24"><path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"/><path d="M8.5 10.5a1 1 0 1 0 0 -.001"/><path d="M12.5 7.5a1 1 0 1 0 0 -.001"/><path d="M16.5 10.5a1 1 0 1 0 0 -.001"/></svg></div><div class="body"><h3>Brand Palette Lab <span class="pill">popup</span></h3><p>Swatches, contrast checker, tints, gradients — copy-ready.</p></div></div>
+    </div>
+
+    <div class="wb-glass" id="webinars" onclick="toggleWebinars(event)">
+      <div class="seclabel"><span class="mark llama-mark"></span>Elective Webinars</div>
+      <div class="wb-header" id="wbHeader">
+        <h2>Sharpen a skill, live.</h2>
+        <span class="wb-cue" id="wbCue">Click to browse sessions</span>
+        <span class="wb-chevron" id="wbChevron"><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></span>
+      </div>
+      <p class="lede">A rotating selection of live sessions from across the L&amp;D world. Browse by skill and sign up for any that spark your interest or move you toward a professional or personal goal.</p>
+      <div class="wb-collapse" id="wbCollapse">
+        <div class="wb-filters" data-scope="webinars">
+          <span class="wb-lbl">Skill</span>
+          <button class="wb-chip on" data-skill="all">All</button>
+          <button class="wb-chip" data-skill="ai">AI in L&amp;D</button>
+          <button class="wb-chip" data-skill="strategy">Strategy</button>
+          <button class="wb-chip" data-skill="video">Video</button>
+          <button class="wb-chip" data-skill="accessibility">Accessibility</button>
+          <button class="wb-chip" data-skill="lmsdocebo">LMS &amp; Docebo</button>
+          <button class="wb-chip" data-skill="authoring">Authoring</button>
+        </div>
+        <div class="wb-grid" id="wbGrid"></div>
+        <div class="wb-empty" id="wbEmpty">No live webinars match that skill right now. Try another filter.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ WATER COOLER ============ -->
+<div class="B-band cooler" id="cooler">
+  <div class="glow-blobs" aria-hidden="true"><span class="blob b1"></span><span class="blob b2"></span><span class="blob b3"></span></div>
+  <div class="wrap">
+    <div class="seclabel"><span class="mark llama-mark"></span>Water Cooler</div>
+    <h2>Where the herd gathers.</h2>
+    <p class="lede">A little culture between the deadlines.</p>
+    <div class="coolgrid">
+      <!-- SPOTIFY — full width, click header to expand player -->
+      <div class="coolgrid-spotify">
+        <div class="coolcard spotify-card" id="spotifyCard">
+          <div class="spotify-header" onclick="toggleSpotify()" id="spotifyHeader">
+            <div class="ic-block"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M8 11.973c2.5 -1.473 5.5 -.973 7.5 .527"/><path d="M9 15c1.5 -1 4 -1 5 .5"/><path d="M7 9c2 -1 6 -2 10 .5"/></svg></div>
+            <div class="spotify-header-text">
+              <h3>Llama League Vibes</h3>
+              <p>The team playlist — click to open the player</p>
+            </div>
+            <span class="spotify-chevron" id="spotifyChevron">⌄</span>
+          </div>
+          <div class="spotify-panel" id="spotifyPanel">
+            <div class="spotify-panel-inner">
+              <iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0tgG9cYfP4fTdLmrjHRxME?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ROW 1: Engagement + Vision Vault -->
+      <div class="coolgrid-row1">
+        <div class="coolcard" style="cursor:pointer;" onclick="window.open('https://docs.google.com/document/d/15KCG7B_Dp_Lg8dfgzKu8fLQ4CWD0-QekIHvzgvBClkA/edit?usp=sharing','_blank','noopener')">
+          <div class="ic-block"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M2 8a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2l0 -8"/><path d="M6 12h4m-2 -2v4"/><path d="M15 11l0 .01"/><path d="M18 13l0 .01"/></svg></div>
+          <h3>Engagement sign-ups</h3><p>Sign up to lead an upcoming engagement activity and add the topic you'll cover.</p><a href="https://docs.google.com/document/d/15KCG7B_Dp_Lg8dfgzKu8fLQ4CWD0-QekIHvzgvBClkA/edit?usp=sharing" target="_blank" rel="noopener" onclick="event.stopPropagation()">Sign up ↗</a>
+        </div>
+        <div class="coolcard" style="cursor:pointer;" onclick="window.open('https://sites.google.com/conservice.com/instructional-design/fun-stuff/the-vision-vault?authuser=0','_blank','noopener')">
+          <div class="ic-block"><svg viewBox="0 0 24 24"><path d="M6 21l15 -15l-3 -3l-15 15l3 3"/><path d="M15 6l3 3"/><path d="M9 3a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"/><path d="M19 13a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"/></svg></div>
+          <h3>The Vision Vault</h3><p>Where the team's big ideas and inspiration live.</p><a href="https://sites.google.com/conservice.com/instructional-design/fun-stuff/the-vision-vault?authuser=0" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open the vault ↗</a>
+        </div>
+      </div>
+      <!-- ROW 2: 3 small cards -->
+      <div class="coolgrid-row2">
+        <div class="coolcard coolcard-sm" style="cursor:pointer;" onclick="window.open('https://docs.google.com/document/d/1SpRMgQFWHBr_crtQxlD-pVzLLWgdYX-cDdVnHFMsxtE/edit?tab=t.0','_blank','noopener')">
+          <div class="ic-block"><svg viewBox="0 0 24 24"><path d="M12 3c1.918 0 3.52 1.35 3.91 3.151a4 4 0 0 1 2.09 7.723l0 7.126h-12v-7.126a4 4 0 1 1 2.092 -7.723a4 4 0 0 1 3.908 -3.151"/><path d="M6.161 17.009l11.839 -.009"/></svg></div>
+          <h3>Content Team Cookbook</h3><p>The team's favorite recipes, collected in one place.</p><a href="https://docs.google.com/document/d/1SpRMgQFWHBr_crtQxlD-pVzLLWgdYX-cDdVnHFMsxtE/edit?tab=t.0" target="_blank" rel="noopener" onclick="event.stopPropagation()">Open the cookbook ↗</a>
+        </div>
+        <div class="coolcard coolcard-sm" style="cursor:pointer;" onclick="window.open('https://sites.google.com/conservice.com/instructional-design/fun-stuff/pet-palace?authuser=0','_blank','noopener')">
+          <div class="ic-block"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M14.7 13.5c-1.1 -2 -1.441 -2.5 -2.7 -2.5c-1.259 0 -1.736 .755 -2.836 2.747c-.942 1.703 -2.846 1.845 -3.321 3.291c-.097 .265 -.145 .677 -.143 .962c0 1.176 .787 2 1.8 2c1.259 0 3 -1 4.5 -1s3.241 1 4.5 1c1.013 0 1.8 -.823 1.8 -2c0 -.285 -.049 -.697 -.146 -.962c-.475 -1.451 -2.512 -1.835 -3.454 -3.538"/><path d="M20.188 8.082a1.039 1.039 0 0 0 -.406 -.082h-.015c-.735 .012 -1.56 .75 -1.993 1.866c-.519 1.335 -.28 2.7 .538 3.052c.129 .055 .267 .082 .406 .082c.739 0 1.575 -.742 2.011 -1.866c.516 -1.335 .273 -2.7 -.54 -3.052l-.001 0"/><path d="M9.474 9c.055 0 .109 0 .163 -.011c.944 -.128 1.533 -1.346 1.32 -2.722c-.203 -1.297 -1.047 -2.267 -1.932 -2.267c-.055 0 -.109 0 -.163 .011c-.944 .128 -1.533 1.346 -1.32 2.722c.204 1.293 1.048 2.267 1.933 2.267"/><path d="M16.456 6.733c.214 -1.376 -.375 -2.594 -1.32 -2.722a1.164 1.164 0 0 0 -.162 -.011c-.885 0 -1.728 .97 -1.93 2.267c-.214 1.376 .375 2.594 1.32 2.722c.054 .007 .108 .011 .162 .011c.885 0 1.73 -.974 1.93 -2.267"/><path d="M5.69 12.918c.816 -.352 1.054 -1.719 .536 -3.052c-.436 -1.124 -1.271 -1.866 -2.009 -1.866c-.14 0 -.277 .027 -.407 .082c-.816 .352 -1.054 1.719 -.536 3.052c.436 1.124 1.271 1.866 2.009 1.866c.14 0 .277 -.027 .407 -.082"/></svg></div>
+          <h3>Pet Palace</h3><p>Show off your furry, feathered, and scaly coworkers.</p><a href="https://sites.google.com/conservice.com/instructional-design/fun-stuff/pet-palace?authuser=0" target="_blank" rel="noopener" onclick="event.stopPropagation()">Visit the palace ↗</a>
+        </div>
+        <div class="coolcard coolcard-sm" onclick="openModal('mHoro')" style="cursor:pointer;">
+          <div class="ic-block"><svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454l0 .008"/><path d="M17 4a2 2 0 0 0 2 2a2 2 0 0 0 -2 2a2 2 0 0 0 -2 -2a2 2 0 0 0 2 -2"/><path d="M19 11h2m-1 -1v2"/></svg></div>
+          <h3>Llama Horoscope</h3><p>Pick your sign for today's reading from the herd.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ FOOTER ============ -->
+<div class="B-foot">
+  <div class="wrap foot-links">
+    <span class="helpful-label">Quick links</span>
+    <div class="foot-cols">
+      <a href="https://www.canva.com/" target="_blank" rel="noopener">Canva ↗</a>
+      <a href="https://kb.conservice.com/" target="_blank" rel="noopener">Knowledge Base ↗</a>
+      <a href="https://lms.conservice.com/pages/17/home" target="_blank" rel="noopener">LMS ↗</a>
+      <a href="https://lmssandbox.conservice.com/learn" target="_blank" rel="noopener">LMS Sandbox ↗</a>
+      <a href="https://rise.articulate.com/manage/all-content" target="_blank" rel="noopener">Rise 360 ↗</a>
+      <a href="https://conservice989398.monday.com/boards/9554096232" target="_blank" rel="noopener">Llamaland ↗</a>
+      <a href="https://wkf.ms/4gs2guy" target="_blank" rel="noopener">Content Request Form ↗</a>
+      <a href="https://kb.conservice.com/52267-training/design-team-project-intake-process-service-level-agreements" target="_blank" rel="noopener">Project Intake &amp; SLAs ↗</a>
+      <a href="https://docs.google.com/spreadsheets/d/1kRx04zAKHiIXnmDPiMMNmGq2oPTseK_NV0umg3DeH6A/edit?usp=sharing" target="_blank" rel="noopener">Email Distros ↗</a>
+    </div>
+  </div>
+  <div class="wrap">
+    <span class="llama-mark" id="footLlama"></span>
+    <div class="brandname">Conservice<span>Instructional Design Hub</span></div>
+    <p>Last updated July 7, 2026</p>
+  </div>
+</div>
+
+<!-- ============ MODALS ============ -->
+<div class="modal-scrim" id="mAcro" onclick="if(event.target===this)closeModal('mAcro')">
+  <div class="modal modal-wide">
+    <div class="modal-head"><span class="mark llama-mark" id="acroLlama"></span><h3>Acronyms &amp; Terms</h3><button class="x" onclick="closeModal('mAcro')">×</button></div>
+    <div class="modal-body">
+      <input class="ac-search" id="acSearch" placeholder="Search people, programs, terms…" oninput="filterAc()">
+      <div class="ac-tabs" id="acTabs">
+        <button class="ac-tab on" data-cat="all" onclick="acTab(this)">All</button>
+        <button class="ac-tab" data-cat="People" onclick="acTab(this)">People</button>
+        <button class="ac-tab" data-cat="Programs" onclick="acTab(this)">Programs</button>
+        <button class="ac-tab" data-cat="Terms" onclick="acTab(this)">Terms</button>
+        <button class="ac-tab" data-cat="Company" onclick="acTab(this)">Company</button>
+      </div>
+      <div id="acList">
+
+        <div class="ac-group" data-cat="People"><h4 class="ac-h">People</h4>
+        <div class="ac-row"><div class="ac-term">DH</div><div class="ac-def">Department Head</div></div>
+        <div class="ac-row"><div class="ac-term">STL</div><div class="ac-def">Senior Team Lead</div></div>
+        <div class="ac-row"><div class="ac-term">TL</div><div class="ac-def">Team Lead</div></div>
+        <div class="ac-row"><div class="ac-term">ATL</div><div class="ac-def">Assistant Team Lead</div></div>
+        <div class="ac-row"><div class="ac-term">GQC</div><div class="ac-def">Group Quality Coach</div></div>
+        <div class="ac-row"><div class="ac-term">AM</div><div class="ac-def">Account Manager</div></div>
+        <div class="ac-row"><div class="ac-term">BM</div><div class="ac-def">Billing Manager</div></div>
+        <div class="ac-row"><div class="ac-term">SM</div><div class="ac-def">Synergy Manager</div></div>
+        </div>
+
+        <div class="ac-group" data-cat="Programs"><h4 class="ac-h">Programs</h4>
+        <div class="ac-row"><div class="ac-term">ABBYY</div><div class="ac-def">Optical character recognition software that reads data off PDFs and translates it into text. Used by Synergy to process utility bills.</div></div>
+        <div class="ac-row"><div class="ac-term">ABBYY-Lite</div><div class="ac-def">A simplified version of ABBYY that uses one generic template. Bills are manually audited for errors.</div></div>
+        <div class="ac-row"><div class="ac-term">ADP</div><div class="ac-def">Website for accessing pay stubs and managing benefits.</div></div>
+        <div class="ac-row"><div class="ac-term">Anakin</div><div class="ac-def">Automates reading and processing of provider bills into YODA.</div></div>
+        <div class="ac-row"><div class="ac-term">EWOK</div><div class="ac-def">Everyone Works on Knowledge — program for reporting issues and suggesting improvements.</div></div>
+        <div class="ac-row"><div class="ac-term">Fusion</div><div class="ac-def">Located in ABP, links provider bill info to YODA. Populated by Synergy, ABBYY, or billing teams.</div></div>
+        <div class="ac-row"><div class="ac-term">Fusion Ultra</div><div class="ac-def">Automates entry of direct-metered provider data into YODA.</div></div>
+        <div class="ac-row"><div class="ac-term">HRX</div><div class="ac-def">Conservice internal site for time punches, policies, benefits, etc.</div></div>
+        <div class="ac-row"><div class="ac-term">KACE</div><div class="ac-def">Internal IT-managed platform for distributing approved software.</div></div>
+        <div class="ac-row"><div class="ac-term">Knowbe4</div><div class="ac-def">Security awareness training site.</div></div>
+        <div class="ac-row"><div class="ac-term">Lightsaber</div><div class="ac-def">Used by teams to input bill data into systems.</div></div>
+        <div class="ac-row"><div class="ac-term">Obi-Wan</div><div class="ac-def">EDE team software for leasing software integration.</div></div>
+        <div class="ac-row"><div class="ac-term">Scriptacular</div><div class="ac-def">Report tool within YODA.</div></div>
+        <div class="ac-row"><div class="ac-term">SSRS</div><div class="ac-def">SQL Server Reporting Services.</div></div>
+        <div class="ac-row"><div class="ac-term">System Health</div><div class="ac-def">Workload and queue manager similar to Excel.</div></div>
+        <div class="ac-row"><div class="ac-term">YODA</div><div class="ac-def">"Your Only Data Access" — internal database for billing, accounting, and reporting.</div></div>
+        </div>
+
+        <div class="ac-group" data-cat="Terms"><h4 class="ac-h">Terms</h4>
+        <div class="ac-row"><div class="ac-term">ABP</div><div class="ac-def">Auto-Bill Process — automates billing via YODA background workers.</div></div>
+        <div class="ac-row"><div class="ac-term">BCF</div><div class="ac-def">Balance Carried Forward — unpaid amount from the previous month's provider bill.</div></div>
+        <div class="ac-row"><div class="ac-term">Community</div><div class="ac-def">Property billed by Conservice.</div></div>
+        <div class="ac-row"><div class="ac-term">Control number</div><div class="ac-def">Unique identifier for each bill.</div></div>
+        <div class="ac-row"><div class="ac-term">Factored occupants</div><div class="ac-def">RUBS method using multipliers based on resident count.</div></div>
+        <div class="ac-row"><div class="ac-term">Flat fees</div><div class="ac-def">Fixed charges like admin fees. Also called flat rate.</div></div>
+        <div class="ac-row"><div class="ac-term">Integration</div><div class="ac-def">Electronic data exchange between Conservice and property software.</div></div>
+        <div class="ac-row"><div class="ac-term">Ledger</div><div class="ac-def">Permanent record of resident billing, fees, and payments.</div></div>
+        <div class="ac-row"><div class="ac-term">Line item</div><div class="ac-def">Individual utility charge on a provider bill.</div></div>
+        <div class="ac-row"><div class="ac-term">Management company</div><div class="ac-def">Client owning/operating one or more properties.</div></div>
+        <div class="ac-row"><div class="ac-term">MWO</div><div class="ac-def">Meter Work Order — request for meter inspection or repair.</div></div>
+        <div class="ac-row"><div class="ac-term">Method penetration</div><div class="ac-def">Percent of residents using a submethod billing type.</div></div>
+        <div class="ac-row"><div class="ac-term">MSA</div><div class="ac-def">Master Service Agreement — switches utility service to owner name after resident termination. Also called LA or CSA.</div></div>
+        <div class="ac-row"><div class="ac-term">Multiplier</div><div class="ac-def">Variable used to calculate utility bills.</div></div>
+        <div class="ac-row"><div class="ac-term">NB</div><div class="ac-def">Non-billable — units or charges that can't be billed due to lease or regulation.</div></div>
+        <div class="ac-row"><div class="ac-term">RUBS</div><div class="ac-def">Ratio Utility Billing System allocating costs by unit size, occupants, etc.</div></div>
+        <div class="ac-row"><div class="ac-term">RUBS admin</div><div class="ac-def">Flat fee version of RUBS.</div></div>
+        <div class="ac-row"><div class="ac-term">Sub-metered billing</div><div class="ac-def">Billing based on individual unit meter reads.</div></div>
+        <div class="ac-row"><div class="ac-term">SOE</div><div class="ac-def">Standards of Excellence — monthly performance measures.</div></div>
+        <div class="ac-row"><div class="ac-term">Tax ID</div><div class="ac-def">IRS-assigned number used for account verification.</div></div>
+        <div class="ac-row"><div class="ac-term">Transfer</div><div class="ac-def">Resident moves units within a property.</div></div>
+        <div class="ac-row"><div class="ac-term">Turn</div><div class="ac-def">Peak move-out/move-in season (mostly Student Housing, May–Oct).</div></div>
+        <div class="ac-row"><div class="ac-term">Usage factor</div><div class="ac-def">Splits bills based on time lived in a unit during billing cycle.</div></div>
+        <div class="ac-row"><div class="ac-term">Utility rates</div><div class="ac-def">Billing based on rate sheets.</div></div>
+        <div class="ac-row"><div class="ac-term">Vacant billing and recovery</div><div class="ac-def">Charges billed to resident for untransferred utilities.</div></div>
+        <div class="ac-row"><div class="ac-term">VSF</div><div class="ac-def">Vacant Service Fee — fee for utilities not in resident's name per lease.</div></div>
+        <div class="ac-row"><div class="ac-term">Work order</div><div class="ac-def">Request for meter maintenance from property or legal.</div></div>
+        </div>
+
+        <div class="ac-group" data-cat="Company"><h4 class="ac-h">Company structure</h4>
+        <div class="ac-row"><div class="ac-term">Operations</div><div class="ac-def">Handle client utilities: Onboarding Services, Utility Services, Billing Services.</div></div>
+        <div class="ac-row"><div class="ac-term">Support</div><div class="ac-def">Business support: IT, HR, Product Development, Training, Accounting, Facilities, Grill (Logan-based meals).</div></div>
+        <div class="ac-row"><div class="ac-term">Client Relations</div><div class="ac-def">Oversee client communications, legal compliance, and resource creation.</div></div>
+        <div class="ac-row"><div class="ac-term">Biz brands</div><div class="ac-def">Client markets served: Commercial, Single Family, Student Housing, Military, Multi-Family.</div></div>
+        </div>
+
+      </div>
+      <p class="ac-none" id="acNone" style="display:none">No matches. Try a different term.</p>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal-scrim" id="mOkr" onclick="if(event.target===this)closeModal('mOkr')">
+  <div class="modal">
+    <div class="modal-head"><span class="mark llama-mark" id="okrLlama"></span><h3>2026 OKRs</h3><button class="x" onclick="closeModal('mOkr')">×</button></div>
+    <div class="modal-body">
+      <p class="okr-lead">The Design team's 2026 objectives and key measurements.</p>
+      <div class="okr-item">
+        <div class="o">L&amp;D Content Organization: Design</div>
+        <p class="okr-obj">Partner with the DPL team on the L&amp;D content organization project, specifically naming conventions, content navigation UX, permissions, and backend storage, to reduce content friction, improve usability, and enable consistent training delivery at scale.</p>
+        <div class="okr-krlabel">Key Measurements</div>
+        <ul class="okr-krlist">
+          <li>UX proposal delivered for L&amp;D content organization and navigation structure</li>
+          <li>Naming convention framework designed and ready for DPL review and adoption</li>
+          <li>Permission and backend storage design recommendations submitted</li>
+          <li>Wireframes and UX flows in development to support hiring-ready training infrastructure</li>
+          <li>Design feedback loop established with DPL and Operations stakeholders</li>
+        </ul>
+      </div>
+      <div class="okr-item">
+        <div class="o">Conservice Core: Design</div>
+        <p class="okr-obj">Partner with the Training and LEAD teams to organize, update, and build a unified onboarding ecosystem spanning LMS pathways, KB, resources, and manager tools, delivering a consistent experience across all role levels.</p>
+        <div class="okr-krlabel">Key Measurements</div>
+        <ul class="okr-krlist">
+          <li>Update Day 1 &amp; Day 2 content</li>
+          <li>Full curriculum overhaul of foundations training</li>
+          <li>Curriculum improvements of professional team onboarding</li>
+          <li>Build external leadership onboarding experience</li>
+        </ul>
+      </div>
+      <div class="okr-item">
+        <div class="o">Leadership Elevated (STL): Design</div>
+        <p class="okr-obj">Partner with the LEAD team to design a comprehensive 12-month leadership development program for the STL level: building the curriculum, LMS pathway, VILT experiences, peer projects, and resources to meaningfully elevate frontline leadership skills.</p>
+        <div class="okr-krlabel">Key Measurements</div>
+        <ul class="okr-krlist">
+          <li>LMS pathway</li>
+          <li>Project set-up &amp; updates in Monday</li>
+          <li>4 VILT</li>
+          <li>3 Peer Projects</li>
+          <li>1 Development Plan</li>
+          <li>Pre &amp; post work</li>
+          <li>Resource access</li>
+          <li>Communications</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ LLAMA HOROSCOPE MODAL ============ -->
+<div class="modal-scrim" id="mHoro" onclick="if(event.target===this)closeModal('mHoro')">
+  <div class="modal">
+    <div class="modal-head"><span class="mark llama-mark" id="horoLlama"></span><h3>Llama Horoscope</h3><button class="x" onclick="closeModal('mHoro')">×</button></div>
+    <div class="modal-body">
+      <p class="horo-intro">Pick your sign. Each element gets one reading for the herd today.</p>
+      <div class="horo-signs" id="horoSigns">
+        <button class="horo-sign" data-el="fire" onclick="horoPick(this)">
+          <span class="hs-ic"><svg viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12c2 -2.96 0 -7 -1 -8c0 3.038 -1.773 4.741 -3 6c-1.226 1.26 -2 3.24 -2 5a6 6 0 1 0 12 0c0 -1.532 -1.056 -3.94 -2 -5c-1.786 3 -2.791 3 -4 2z"/></svg></span>
+          <span><span class="hs-t">Fire</span><span class="hs-s">Aries · Leo · Sagittarius</span></span>
+        </button>
+        <button class="horo-sign" data-el="earth" onclick="horoPick(this)">
+          <span class="hs-ic"><svg viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 21c-3.314 0 -6 -2.462 -6 -5.5s2.686 -8 6 -12.5c3.314 4.5 6 9.462 6 12.5s-2.686 5.5 -6 5.5z"/></svg></span>
+          <span><span class="hs-t">Earth</span><span class="hs-s">Taurus · Virgo · Capricorn</span></span>
+        </button>
+        <button class="horo-sign" data-el="air" onclick="horoPick(this)">
+          <span class="hs-ic"><svg viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 8h8.5a2.5 2.5 0 1 0 -2.34 -3.24"/><path d="M3 12h15.5a2.5 2.5 0 1 1 -2.34 3.24"/><path d="M4 16h5.5a2.5 2.5 0 1 1 -2.34 3.24"/></svg></span>
+          <span><span class="hs-t">Air</span><span class="hs-s">Gemini · Libra · Aquarius</span></span>
+        </button>
+        <button class="horo-sign" data-el="water" onclick="horoPick(this)">
+          <span class="hs-ic"><svg viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3l5 5a7 7 0 1 1 -10 0l5 -5z"/></svg></span>
+          <span><span class="hs-t">Water</span><span class="hs-s">Cancer · Scorpio · Pisces</span></span>
+        </button>
+      </div>
+      <div class="horo-result" id="horoResult">
+        <div class="horo-stage">
+          <svg class="horo-constellation" id="horoConstel" viewBox="0 0 320 118" preserveAspectRatio="xMidYMid meet" aria-hidden="true"></svg>
+          <span class="horo-casting" id="horoCasting">Consulting the herd…</span>
+        </div>
+        <div class="horo-reveal" id="horoReveal">
+          <div class="hr-head">
+            <span class="hr-ic" id="horoResIc"></span>
+            <span class="hr-name" id="horoResName"></span>
+          </div>
+          <p class="horo-text" id="horoText"></p>
+          <div class="horo-stats">
+            <div class="horo-stat"><div class="hst-l">Lucky snack</div><div class="hst-v" id="horoSnack"></div></div>
+            <div class="horo-stat"><div class="hst-l">Llama aura</div><div class="hst-v" id="horoAura"></div></div>
+          </div>
+          <div class="horo-again"><button onclick="horoReset()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></svg>Consult the stars again</button></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ BRAND PALETTE MODAL ============ -->
+<div class="modal-scrim" id="mPalette" onclick="if(event.target===this)closeModal('mPalette')">
+  <div class="modal modal-wide">
+    <div class="modal-head"><span class="mark llama-mark" id="palLlama"></span><h3>Brand Palette Lab</h3><button class="x" onclick="closeModal('mPalette')">×</button></div>
+    <div class="modal-body">
+
+      <div class="pal-tabs">
+        <button class="pal-tab on" data-pane="swatches" onclick="palTab(this)">Swatches</button>
+        <button class="pal-tab" data-pane="contrast" onclick="palTab(this)">Contrast checker</button>
+        <button class="pal-tab" data-pane="shades" onclick="palTab(this)">Tints &amp; shades</button>
+        <button class="pal-tab" data-pane="gradient" onclick="palTab(this)">Gradient maker</button>
+        <button class="pal-tab" data-pane="export" onclick="palTab(this)">Export</button>
+        <button class="pal-tab" data-pane="resources" onclick="palTab(this)">Resources</button>
+      </div>
+
+      <div class="pal-pane on" id="pane-swatches">
+        <div class="pal-fmt">
+          <span class="pal-fmt-label">Copy as</span>
+          <button class="fmt-btn on" data-fmt="hex" onclick="setFmt(this)">HEX</button>
+          <button class="fmt-btn" data-fmt="rgb" onclick="setFmt(this)">RGB</button>
+          <button class="fmt-btn" data-fmt="cmyk" onclick="setFmt(this)">CMYK</button>
+        </div>
+        <h4 class="pal-h">Primary &amp; secondary</h4>
+        <div class="sw-grid" id="sw-core"></div>
+        <h4 class="pal-h">Tertiary (data design)</h4>
+        <div class="sw-grid" id="sw-tertiary"></div>
+        <h4 class="pal-h">Functional</h4>
+        <div class="sw-grid" id="sw-func"></div>
+        <p class="pal-hint">Tap any swatch to copy. Format set above.</p>
+      </div>
+
+      <div class="pal-pane" id="pane-contrast">
+        <p class="pal-hint">See any two brand colors on each other, with the WCAG accessibility score.</p>
+        <div class="ct-pickers">
+          <label class="ct-pick">Text<select id="ctFg" onchange="renderContrast()"></select></label>
+          <button class="ct-swap" onclick="swapContrast()" title="Swap" aria-label="Swap colors">⇅</button>
+          <label class="ct-pick">Background<select id="ctBg" onchange="renderContrast()"></select></label>
+        </div>
+        <div class="ct-preview" id="ctPreview">
+          <span class="ct-big">Aa</span>
+          <span class="ct-sample">The quick brown llama jumps the fence.</span>
+          <span class="ct-small">Smaller body text sample for legibility.</span>
+        </div>
+        <div class="ct-readout">
+          <div class="ct-ratio"><span id="ctRatio">—</span><span class="ct-ratio-l">contrast ratio</span></div>
+          <div class="ct-badges" id="ctBadges"></div>
+        </div>
+      </div>
+
+      <div class="pal-pane" id="pane-shades">
+        <p class="pal-hint">Pick a brand color to generate on-brand tints (lighter) and shades (darker). Tap any to copy.</p>
+        <label class="ct-pick wide">Base color<select id="shBase" onchange="renderShades()"></select></label>
+        <div class="sh-row" id="shRow"></div>
+      </div>
+
+      <div class="pal-pane" id="pane-gradient">
+        <p class="pal-hint">Build an on-brand gradient from two colors. Copy the CSS straight into your project.</p>
+        <div class="ct-pickers">
+          <label class="ct-pick">From<select id="grA" onchange="renderGradient()"></select></label>
+          <label class="ct-pick">To<select id="grB" onchange="renderGradient()"></select></label>
+          <label class="ct-pick">Angle<select id="grAngle" onchange="renderGradient()">
+            <option value="135">135°</option><option value="90">90°</option><option value="45">45°</option><option value="180">180°</option><option value="0">0°</option>
+          </select></label>
+        </div>
+        <div class="gr-preview" id="grPreview"></div>
+        <div class="gr-css"><code id="grCss"></code><button class="copy-mini" onclick="copyGradient()">Copy CSS</button></div>
+      </div>
+
+      <div class="pal-pane" id="pane-export">
+        <p class="pal-hint">Grab the whole brand palette as CSS custom properties — drop into any new project and the system is yours.</p>
+        <pre class="ex-code" id="exCode"></pre>
+        <button class="pal-export-btn" onclick="copyExport()">Copy all as CSS variables</button>
+      </div>
+
+      <div class="pal-pane" id="pane-resources">
+        <h4 class="pal-h">Brand &amp; color guides</h4>
+        <div class="res-list">
+          <a class="res-link" href="https://drive.google.com/drive/folders/1_gR9WPKWvccY4-NmjuTIpqif3uCG--CS?usp=drive_link" target="_blank" rel="noopener"><span class="res-t">Logos ↗</span><span class="res-d">Every Conservice logo variation in one spot, ready to drop in.</span></a>
+          <a class="res-link" href="https://drive.google.com/file/d/1BftTPEzOIPltXEY-rYIq3hHPVIXKiMrE/view" target="_blank" rel="noopener"><span class="res-t">Conservice Color Guide (PDF) ↗</span><span class="res-d">Our full color system, with palettes, data-viz ramps, and usage rules.</span></a>
+          <a class="res-link" href="https://drive.google.com/drive/folders/1x5d82qfRhU82kCuUR5f_bUm3isuwhACJ?usp=drive_link" target="_blank" rel="noopener"><span class="res-t">Brand Resources folder ↗</span><span class="res-d">The rest of the brand kit, from brand build to fonts and beyond.</span></a>
+        </div>
+        <h4 class="pal-h">Design tools &amp; goodies</h4>
+        <div class="res-list">
+          <a class="res-link" href="https://storyset.com/" target="_blank" rel="noopener"><span class="res-t">Storyset ↗</span><span class="res-d">Free, customizable illustrations for courses and decks.</span></a>
+          <a class="res-link" href="https://coolors.co/" target="_blank" rel="noopener"><span class="res-t">Coolors ↗</span><span class="res-d">Fast palette generator for exploring color combos.</span></a>
+          <a class="res-link" href="https://www.streamlinehq.com/" target="_blank" rel="noopener"><span class="res-t">Streamline ↗</span><span class="res-d">Huge icon &amp; illustration library for visual content.</span></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script src="webinars.js"></script>
+<script>
+  // user's uploaded llama brand mark (Noun Project credit text stripped from render)
+  var LLAMA = '<svg viewBox="-5 -10 110 135" xmlns="http://www.w3.org/2000/svg"><path d="m29.105 77.879c-0.51172 0.65234-0.98438 1.332-1.5508 1.9375 0.10937 4.5547 1.3828 11.375 3.2852 15.523 0.29688 0.65234 0.61328 1.4219 1.1406 1.9258 0.72656 0.69141 2.1094 0.56641 3.0469 0.59375l0.70703 0.023437c0.023437-0.40625 0.18359-1.4492-0.078125-1.7656-0.30078-0.35938-0.91797-0.50391-1.2773-0.85938-1.5391-1.5234-1.8789-3.9648-1.9805-6.0352-0.10938-2.1523-0.11719-4.4219 0.4375-6.5195 0.73828-2.7812 2.1055-4.3477 3.4844-6.7109 0.16406-0.28516 0.32422-0.57422 0.48047-0.86328 0.15625-0.29297 0.30078-0.58594 0.44531-0.88281 0.14453-0.29688 0.27734-0.59375 0.40625-0.89844 0.12891-0.30469 0.25391-0.60547 0.37109-0.91406 0.11719-0.30469 0.23047-0.61719 0.33594-0.92969s0.20703-0.625 0.29688-0.94141c0.089844-0.3125 0.18359-0.63281 0.26172-0.95312s0.15625-0.64062 0.22266-0.96094c-1.2461-0.49609-2.7109-0.93359-3.8867-1.5352-1.3477 3.9609-3.582 7.4883-6.1484 10.762z"/><path d="m80.043 12.555c-1.3359-0.76563-1.9531-2.293-3.043-3.3164-0.63672-0.59766-1.4961-1.0273-2.2734-1.4219 0.63672-1.5234 1.1289-2.9805 1.2539-4.6445 0.023437-0.30078 0.070312-0.65234-0.039063-0.94141-0.042968-0.10938-0.10938-0.21094-0.21875-0.26562-0.1875-0.085938-0.41406-0.015625-0.58594 0.066406-1.2305 0.58203-2.8242 2.2969-3.5586 3.4258-0.35938 0.55469-0.63672 1.1875-1.0234 1.7227 0.13281-2.0391 0.125-3.7148-0.47656-5.6992-0.13672-0.44531-0.26562-0.95312-0.58594-1.3008-0.11719-0.13281-0.20703-0.17969-0.38672-0.18359h-0.11719c-0.47266 0.38672-0.82031 0.99219-1.1484 1.5039-1.4961 2.3516-2.1719 4.293-2.4922 7.0703-3.1172 3.2656-3.2305 8.5703-3.1328 12.809 0.070312 2.1406 0.18359 4.2812 0.34375 6.418 0.3125 4.4023 1.2031 12.379-2.0312 15.809-1.2656 1.3438-3.0859 1.875-4.8867 1.918-2.8984 0.074218-6.5117-0.85156-9.3984-1.4102-5.9102-1.1445-13.688-1.6914-19.574-0.23047-0.73828-1.2969-1.7578-2.0391-3.2031-2.4336-1.7969-0.48828-3.8047-0.31641-5.4258 0.61719-1.4883 0.85938-2.5664 2.3477-2.9961 4.0039-0.38672 1.4883-0.32031 3.5977 0.49219 4.9492 0.20312 0.33203 0.49219 0.70312 0.89453 0.80078 0.20703 0.050782 0.45312 0.039063 0.63281-0.089843 0.21875-0.16016 0.32812-0.44531 0.41016-0.69141 0.11719-0.35937 0.21094-0.75391 0.39844-1.082 0.61328-1.082 1.9297-1.3125 3.0508-1.4727-0.48438 0.89844-0.93359 1.7969-1.2539 2.7734-1.2695 3.8711-0.97266 8.3672-0.12891 12.293 0.48047 2.2344 1.1211 4.4531 1.1055 6.7578-0.015625 1.8555-0.29297 3.8477-0.94922 5.5859-0.42578 1.1328-0.98437 2.2109-1.2734 3.3906-0.60547 2.4648 0.60547 10.105 1.1758 12.91 0.27734 1.3477 0.61328 2.6836 1.0078 4 0.30078 1.0117 0.59375 2.4844 1.6094 3.0156 0.94531 0.49219 2.6445 0.55859 3.7188 0.58594v-1.9648c-1.0508-0.5-1.8789-1.082-2.2891-2.2109-0.89062-2.457-0.60547-8.6445-0.0625-11.281 0.16797-0.81641 0.41406-1.6016 0.77344-2.3555 0.91406-1.9297 2.4531-3.6367 3.7617-5.3164 2.5508-3.2656 5.1953-7.3828 6.2812-11.422 3.9805 1.5391 7.9883 2.9023 12.195 3.6836 2.3203 0.46094 4.6562 0.84375 7.0039 1.1484 1.375 0.17969 2.7891 0.28125 4.1523 0.55469 1.1133 6.2578 1.7812 12.535 2.3867 18.859 0.18359 1.9062 0.35547 3.8086 0.51953 5.7188 0.078125 0.94141 0.078125 1.9766 0.25391 2.9023 0.09375 0.48828 0.34766 1.0273 0.76562 1.3164 0.69922 0.48437 3.1484 0.55859 4.0742 0.57812 0.054688-0.63672 0.20312-1.3633-0.24609-1.8984-0.26172-0.3125-0.64062-0.50781-0.95312-0.77344-0.85156-0.72266-0.74219-1.957-0.67578-2.9609 0.066406-1.0156 0.18359-2.0273 0.27734-3.0391 0.19141-2.3438 0.41406-4.6836 0.66797-7.0195 0.16406-1.5625 0.23047-3.4258 0.58203-4.9297 0.058594 1.5938 0.25391 3.1797 0.39844 4.7656l0.51172 6.125 0.35938 4.0117c0.070313 0.77344 0.09375 1.5898 0.25391 2.3516 0.078125 0.37891 0.25781 0.71875 0.53906 0.98828 0.23828 0.23438 0.54688 0.37891 0.86719 0.46875 0.83984 0.22656 2.6836 0.27344 3.6602 0.38672 0.066406-0.60938 0.25-1.3516-0.17969-1.8633-0.21484-0.25781-0.53906-0.45312-0.80078-0.66016-1.1758-0.91406-1.3008-1.6562-1.2188-3.0781 0.10938-1.7891 0.33203-3.582 0.50391-5.3672 0.32422-3.5977 0.67578-7.1914 1.0508-10.785 0.26172-2.4766 0.60547-4.9648 0.79297-7.4414 1.0195-1.0273 1.8906-2.1641 2.6914-3.3672 2.9609-4.4453 3.7344-8.9336 3.7109-14.188-0.027344-6.7812-1.457-13.484-3.0195-20.051-0.67188-2.8164-1.5273-5.7188-1.9414-8.5859-0.089843-0.63281-0.27734-1.9492 0.23828-2.4492 0.72656-0.70703 3.4531-0.87891 4.457-0.83203 1.668 0.070313 3.5938 1.2148 5.0508-0.085937 0.35938-0.32422 1.0547-1 1.0664-1.5156 0.003907-0.27734-0.13281-0.53906-0.23828-0.78516 0.49219-0.30859 0.83984-0.60938 0.97266-1.207 0.09375-0.41406 0.078125-0.98828-0.18359-1.3477-0.4375-0.60156-3.9805-1.7695-4.9023-2.3008zm-5.6406-0.11719c0 0.042969-0.003906 0.085938-0.015625 0.125-0.007813 0.042969-0.015625 0.085938-0.023438 0.125-0.011719 0.042969-0.023437 0.082031-0.039062 0.12109-0.015625 0.042968-0.03125 0.078125-0.050781 0.11719-0.20313 0.40234-0.52734 0.57812-0.9375 0.71094-0.26953 0.011719-0.51953 0.011719-0.77344-0.10156-0.32422-0.14453-0.57812-0.41406-0.6875-0.75391-0.011719-0.039062-0.023438-0.074219-0.03125-0.11328-0.007812-0.039063-0.015625-0.078125-0.019531-0.11719-0.003907-0.039062-0.003907-0.078125-0.003907-0.11719 0-0.042969 0-0.078125 0.003907-0.11719 0.003906-0.039062 0.007812-0.078125 0.015625-0.11719 0.007812-0.039063 0.015625-0.078125 0.027344-0.11328 0.011718-0.039063 0.023437-0.074219 0.039062-0.10938 0.015625-0.035156 0.03125-0.070312 0.050781-0.10937 0.21094-0.40625 0.55078-0.60156 0.96875-0.74609 0.25781-0.015625 0.50391 0.003906 0.74219 0.10938 0.039062 0.015625 0.074219 0.035156 0.10938 0.054687 0.035156 0.019532 0.070312 0.042969 0.10547 0.066406 0.03125 0.023438 0.066407 0.050782 0.097657 0.078126 0.03125 0.027343 0.0625 0.054687 0.089843 0.085937 0.027344 0.03125 0.054688 0.0625 0.078126 0.09375 0.023437 0.03125 0.050781 0.066406 0.070312 0.10156 0.023438 0.035156 0.042969 0.070312 0.0625 0.10937 0.019531 0.035157 0.03125 0.074219 0.050781 0.11328 0.015625 0.042968 0.027344 0.078125 0.039063 0.12109 0.011718 0.042968 0.019531 0.082031 0.023437 0.125 0.003907 0.042968 0.011719 0.085937 0.015625 0.125v0.12891z"/></svg>';
+
+  // inject llama into every mark slot
+  ['navLlama','footLlama','acroLlama','okrLlama','palLlama','vidLlama','horoLlama'].forEach(function(id){
+    var el=document.getElementById(id); if(el) el.innerHTML=LLAMA;
+  });
+  document.querySelectorAll('.seclabel .mark').forEach(function(el){ el.innerHTML=LLAMA; });
+  var tkL=document.getElementById('tkLlama'); if(tkL){ tkL.innerHTML=LLAMA; }
+
+  // ===== Llama Horoscope =====
+  // EDIT ME: daily readings per element. One is shown per day, rotating by date.
+  var HORO={
+    fire:{name:'Fire',ic:'<svg viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12c2 -2.96 0 -7 -1 -8c0 3.038 -1.773 4.741 -3 6c-1.226 1.26 -2 3.24 -2 5a6 6 0 1 0 12 0c0 -1.532 -1.056 -3.94 -2 -5c-1.786 3 -2.791 3 -4 2z"/></svg>',
+      lines:[
+        'You woke up ready to stampede. Channel it into one big task before noon and the rest of the day bends to you.',
+        'Someone will test your patience today. A llama picks its battles, and so should you.',
+        'Your energy is contagious. Lead the charge on the thing nobody else wants to start.',
+        'Bold moves pay off today, but check the fence before you leap it.',
+        'The herd is looking to you. Set the pace, then let them keep up.',
+        'A spark of an idea hits early. Write it down before it grazes away.',
+        'You run hot today. Take the win, but leave a little hay for tomorrow.',
+        'Confidence is your fuel. Say the bold thing in the meeting.',
+        'Restless hooves mean it is time to move a stalled project forward.',
+        'Your fire warms the whole paddock today. Share it generously.'
+      ]},
+    earth:{name:'Earth',ic:'<svg viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 21c-3.314 0 -6 -2.462 -6 -5.5s2.686 -8 6 -12.5c3.314 4.5 6 9.462 6 12.5s-2.686 5.5 -6 5.5z"/></svg>',
+      lines:[
+        'Steady hooves win today. The slow, boring task is the one that pays off.',
+        'You are the rock of the herd. Someone will lean on you, and that is fine.',
+        'Plant something today, a habit, a plan, a kind word. It grows later.',
+        'Resist the urge to wander. Finishing beats starting today.',
+        'Your patience is a superpower this week. Use it on the thing that frustrates everyone else.',
+        'Ground yourself before the chaos starts. Coffee, a list, a deep breath.',
+        'Small, consistent steps move the mountain. No need to leap it.',
+        'You notice the details others miss today. Trust that eye.',
+        'Stability is your gift to the herd. Be the calm one in the room.',
+        'Tend your own pasture first. The rest can wait an hour.'
+      ]},
+    air:{name:'Air',ic:'<svg viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 8h8.5a2.5 2.5 0 1 0 -2.34 -3.24"/><path d="M3 12h15.5a2.5 2.5 0 1 1 -2.34 3.24"/><path d="M4 16h5.5a2.5 2.5 0 1 1 -2.34 3.24"/></svg>',
+      lines:[
+        'Ideas are blowing in fast today. Catch the good one and let the rest drift by.',
+        'Your words land well today. Send the message you have been sitting on.',
+        'A conversation changes everything. Stay curious and keep your ears up.',
+        'Scattered is fine if you pick one direction by lunch.',
+        'You connect the dots others cannot see. Speak up in the group chat.',
+        'Lightness is your edge today. Do not let one snag weigh down the whole herd.',
+        'Fresh perspective incoming. Step back before you decide.',
+        'Your curiosity opens a door today. Walk through it.',
+        'Share the idea even if it is half-formed. The herd builds on it.',
+        'A breeze of inspiration arrives mid-afternoon. Be ready to catch it.'
+      ]},
+    water:{name:'Water',ic:'<svg viewBox="0 0 24 24"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 3l5 5a7 7 0 1 1 -10 0l5 -5z"/></svg>',
+      lines:[
+        'You feel the herd mood before anyone says a word. Trust that read today.',
+        'Go with the flow, but know which shore you are swimming toward.',
+        'A quiet check-in with a teammate matters more than you think today.',
+        'Your intuition is loud today. Listen to the gut before the spreadsheet.',
+        'Let one thing go. You have been carrying it longer than the herd noticed.',
+        'Deep work suits you today. Find a calm corner of the pasture.',
+        'Your empathy is needed. Someone just wants to be heard, not fixed.',
+        'Ride the current on the easy stuff and save your strength for what matters.',
+        'Feelings run high but they pass like a stream. Do not build a dam today.',
+        'Still water, clear mind. Take a slow morning if you can.'
+      ]}
+  };
+  // EDIT ME: lucky snacks (random each open), llama-centric, work-safe.
+  var HORO_SNACKS=['Carrots','Apple slices','A fresh bale of hay','Banana chips','Trail mix','Dandelion greens','Pumpkin seeds','A crisp pear','Celery sticks','Oat clusters','Sweet potato bites','Alfalfa cubes','Watermelon rind','Crunchy snap peas','A handful of blueberries','Toasted barley','Carrot-top greens','Frozen grapes'];
+  // EDIT ME: llama auras / archetypes (random each open). Each has "Llama" in the name.
+  var HORO_AURAS=['The Sage Llama','The Diva Llama','The Goblin Llama','The Diplomat Llama','The Escapee Llama','The Snack-Bandit Llama','The Philosopher Llama','The Overachiever Llama','The Softie Llama','The Menace Llama','The Zen-Master Llama','The Drama Llama','The Trailblazer Llama','The Daydreamer Llama','The Peacekeeper Llama','The Night-Owl Llama'];
+
+  // EDIT ME: each element gets a little constellation. [x,y] star points (viewBox 320x118); lines connect them in order.
+  var HORO_CONSTEL={
+    fire:[[16,82],[74,34],[130,72],[188,26],[248,66],[306,40]],
+    earth:[[14,52],[72,88],[132,44],[192,90],[250,50],[304,82]],
+    air:[[16,68],[76,40],[134,84],[190,36],[248,76],[306,46]],
+    water:[[14,44],[74,84],[136,36],[192,86],[250,42],[306,80]]
+  };
+  // date-seeded index so the whole team sees the same reading on a given day
+  function horoDayIndex(n){
+    var d=new Date();
+    var seed=d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate();
+    return seed % n;
+  }
+  // pick a pseudo-random item, seeded by the day AND a salt so each element differs; stable per day
+  function horoRand(arr,salt){
+    var d=new Date();
+    var s=(salt||0);
+    var seed=((d.getFullYear()*10000+(d.getMonth()+1)*100+d.getDate())+s*7919)*2654435761 % 2147483647;
+    return arr[Math.abs(seed) % arr.length];
+  }
+  function horoBuildConstel(el){
+    var pts=HORO_CONSTEL[el]; var svg=document.getElementById('horoConstel');
+    // north-star and sparkle path geometry, drawn in a 24x24 box then scaled/translated to each point
+    var NORTH='<path d="M3 12h18"/><path d="M12 21v-18"/><path d="M7.5 7.5l9 9"/><path d="M7.5 16.5l9 -9"/>';
+    var SPARK='<path d="M21 12c-6.597 0 -9 2.403 -9 9c0 -6.597 -2.403 -9 -9 -9c6.597 0 9 -2.403 9 -9c0 6.597 2.403 9 9 9"/>';
+    var html='';
+    for(var j=0;j<pts.length;j++){
+      var isStar=(j%2===0);
+      var glyph=isStar?NORTH:SPARK;
+      var s=isStar?0.62:0.78;               // scale of the 24px icon
+      var sz=24*s;
+      var tx=pts[j][0]-sz/2, ty=pts[j][1]-sz/2;
+      html+='<g class="horo-glyph" style="--d:'+(j*0.14).toFixed(2)+'s;--tw:'+(2.6+(j%3)*0.7).toFixed(2)+'s" '
+           +'transform="translate('+tx.toFixed(1)+','+ty.toFixed(1)+') scale('+s+')" '
+           +'transform-origin="'+pts[j][0].toFixed(1)+'px '+pts[j][1].toFixed(1)+'px">'+glyph+'</g>';
+    }
+    svg.innerHTML=html;
+    svg.classList.remove('draw'); void svg.offsetWidth; svg.classList.add('draw');
+  }
+  function horoReset(){
+    var r=document.getElementById('horoResult'); r.classList.remove('show');
+    document.querySelectorAll('#horoSigns .horo-sign').forEach(function(b){b.classList.remove('on');});
+    document.getElementById('horoSigns').style.display='';
+  }
+  function horoPick(btn){
+    document.querySelectorAll('#horoSigns .horo-sign').forEach(function(b){b.classList.remove('on');});
+    btn.classList.add('on');
+    var el=btn.getAttribute('data-el'); var data=HORO[el];
+    if(!data){return;}
+    function setText(id,val){var n=document.getElementById(id); if(n){n.textContent=val;}}
+    function setHTML(id,val){var n=document.getElementById(id); if(n){n.innerHTML=val;}}
+    // prep content
+    setHTML('horoResIc',data.ic);
+    setText('horoResName',data.name+' llamas');
+    setText('horoText',data.lines[horoDayIndex(data.lines.length)]);
+    var elSalt={fire:1,earth:2,air:3,water:4}[el]||0;
+    setText('horoSnack',horoRand(HORO_SNACKS,elSalt));
+    setText('horoAura',horoRand(HORO_AURAS,elSalt+40));
+    var reveal=document.getElementById('horoReveal'); if(reveal){reveal.classList.remove('in');}
+    var casting=document.getElementById('horoCasting'); if(casting){casting.style.animation='none';void casting.offsetWidth;casting.style.animation='';}
+    // hide the picker so the stage takes the spotlight, show result
+    var signs=document.getElementById('horoSigns'); if(signs){signs.style.display='none';}
+    var result=document.getElementById('horoResult'); if(result){result.classList.add('show');}
+    horoBuildConstel(el);
+    // fade the reading in after the stars draw; fallback ensures it always shows
+    if(reveal){ setTimeout(function(){ reveal.classList.add('in'); }, 1300); }
+  }
+
+  // ===== Brand Palette Lab =====
+  var BRAND=[
+    {n:'Navy',hex:'#263746',rgb:'38, 55, 70',cmyk:'85, 69, 51, 46'},
+    {n:'Green',hex:'#77BC1F',rgb:'119, 188, 31',cmyk:'58, 2, 100, 0'},
+    {n:'Blue',hex:'#2172B7',rgb:'33, 114, 183',cmyk:'82, 57, 0, 0'},
+    {n:'Orange',hex:'#FF8300',rgb:'255, 131, 0',cmyk:'0, 60, 100, 0'},
+    {n:'Dark Gray',hex:'#555759',rgb:'85, 87, 89',cmyk:'65, 56, 53, 29'},
+    {n:'Light Gray',hex:'#D2D3D3',rgb:'209, 211, 211',cmyk:'17, 12, 13, 0'},
+    {n:'White',hex:'#FFFFFF',rgb:'255, 255, 255',cmyk:'0, 0, 0, 0'}
+  ];
+  var TERT=[
+    {n:'Yellow',hex:'#FEBE10',rgb:'254, 190, 16',cmyk:'0, 27, 99, 0'},
+    {n:'Darker Green',hex:'#009D66',rgb:'0, 157, 102',cmyk:'83, 13, 79, 1'},
+    {n:'Purple',hex:'#680054',rgb:'104, 0, 84',cmyk:'58, 100, 33, 28'},
+    {n:'Red Orange',hex:'#FD5F46',rgb:'253, 95, 70',cmyk:'0, 78, 74, 0'}
+  ];
+  var FUNC=[
+    {n:'Error Red',hex:'#D31E1E',rgb:'211, 30, 30',cmyk:'0, 86, 86, 17'}
+  ];
+  var ALL=BRAND.concat(TERT).concat(FUNC);
+  var palFmt='hex';
+  function valFor(c){ return palFmt==='hex'?c.hex : palFmt==='rgb'?('rgb('+c.rgb+')') : ('cmyk('+c.cmyk+')'); }
+  function lum(hex){var r=parseInt(hex.substr(1,2),16)/255,g=parseInt(hex.substr(3,2),16)/255,b=parseInt(hex.substr(5,2),16)/255;
+    function f(v){return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4);}return 0.2126*f(r)+0.7152*f(g)+0.0722*f(b);}
+  function ratio(h1,h2){var l1=lum(h1),l2=lum(h2);var hi=Math.max(l1,l2),lo=Math.min(l1,l2);return (hi+0.05)/(lo+0.05);}
+  function copyTxt(t,el){if(navigator.clipboard)navigator.clipboard.writeText(t);if(el){el.classList.add('copied');setTimeout(function(){el.classList.remove('copied');},900);}}
+  function buildSwatches(){
+    function card(c){var dark=lum(c.hex)<0.4;
+      return '<button class="sw" style="background:'+c.hex+';color:'+(dark?'#fff':'#1b2832')+'" onclick="copySwatch(this,\''+c.hex+'\')">'+
+        '<span class="sw-name">'+c.n+'</span><span class="sw-val" data-hex="'+c.hex+'" data-rgb="'+c.rgb+'" data-cmyk="'+c.cmyk+'">'+c.hex+'</span><span class="sw-copied">Copied!</span></button>';}
+    document.getElementById('sw-core').innerHTML=BRAND.map(card).join('');
+    document.getElementById('sw-tertiary').innerHTML=TERT.map(card).join('');
+    document.getElementById('sw-func').innerHTML=FUNC.map(card).join('');
+    refreshSwatchVals();
+  }
+  function refreshSwatchVals(){document.querySelectorAll('.sw-val').forEach(function(s){
+    s.textContent=palFmt==='hex'?s.getAttribute('data-hex'):palFmt==='rgb'?s.getAttribute('data-rgb'):s.getAttribute('data-cmyk');});}
+  function setFmt(btn){palFmt=btn.getAttribute('data-fmt');document.querySelectorAll('.fmt-btn').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');refreshSwatchVals();}
+  function copySwatch(btn,hex){var c=ALL.find(function(x){return x.hex===hex;});copyTxt(valFor(c));btn.classList.add('copied');setTimeout(function(){btn.classList.remove('copied');},900);}
+  function fillSelect(sel,arr,idx){sel.innerHTML=arr.map(function(c,i){return '<option value="'+c.hex+'"'+(i===idx?' selected':'')+'>'+c.n+'</option>';}).join('');}
+  function renderContrast(){
+    var fg=document.getElementById('ctFg').value, bg=document.getElementById('ctBg').value;
+    var p=document.getElementById('ctPreview');p.style.background=bg;p.style.color=fg;
+    var r=ratio(fg,bg);document.getElementById('ctRatio').textContent=r.toFixed(2)+':1';
+    function badge(label,pass){return '<span class="ct-badge '+(pass?'pass':'fail')+'">'+label+' '+(pass?'✓':'✗')+'</span>';}
+    document.getElementById('ctBadges').innerHTML=badge('AA normal',r>=4.5)+badge('AA large',r>=3)+badge('AAA normal',r>=7)+badge('AAA large',r>=4.5);
+  }
+  function swapContrast(){var a=document.getElementById('ctFg'),b=document.getElementById('ctBg'),t=a.value;a.value=b.value;b.value=t;renderContrast();}
+  function mix(hex,target,amt){var r=parseInt(hex.substr(1,2),16),g=parseInt(hex.substr(3,2),16),b=parseInt(hex.substr(5,2),16);
+    r=Math.round(r+(target-r)*amt);g=Math.round(g+(target-g)*amt);b=Math.round(b+(target-b)*amt);
+    return '#'+[r,g,b].map(function(v){return ('0'+v.toString(16)).slice(-2);}).join('').toUpperCase();}
+  function renderShades(){
+    var base=document.getElementById('shBase').value;
+    var steps=[{l:'+60%',h:mix(base,255,.6)},{l:'+40%',h:mix(base,255,.4)},{l:'+20%',h:mix(base,255,.2)},
+      {l:'Base',h:base.toUpperCase()},{l:'-20%',h:mix(base,0,.2)},{l:'-40%',h:mix(base,0,.4)},{l:'-60%',h:mix(base,0,.6)}];
+    document.getElementById('shRow').innerHTML=steps.map(function(s){var dark=lum(s.h)<0.45;
+      return '<button class="sh-chip'+(s.l==='Base'?' base':'')+'" style="background:'+s.h+';color:'+(dark?'#fff':'#1b2832')+'" onclick="copyTxt(\''+s.h+'\',this)"><span class="sh-l">'+s.l+'</span><span class="sh-h">'+s.h+'</span><span class="sw-copied">Copied!</span></button>';}).join('');
+  }
+  function renderGradient(){
+    var a=document.getElementById('grA').value,b=document.getElementById('grB').value,ang=document.getElementById('grAngle').value;
+    var css='linear-gradient('+ang+'deg, '+a+', '+b+')';
+    document.getElementById('grPreview').style.background=css;
+    document.getElementById('grCss').textContent='background: '+css+';';
+  }
+  function copyGradient(){copyTxt(document.getElementById('grCss').textContent);var b=document.querySelector('.gr-css .copy-mini');if(b){b.textContent='Copied!';setTimeout(function(){b.textContent='Copy CSS';},1000);}}
+  function buildExport(){var lines=[':root {'];ALL.forEach(function(c){lines.push('  --'+c.n.toLowerCase().replace(/ /g,'-')+': '+c.hex+';');});lines.push('}');document.getElementById('exCode').textContent=lines.join('\n');}
+  function copyExport(){copyTxt(document.getElementById('exCode').textContent);var b=document.querySelector('.pal-export-btn');b.textContent='Copied!';setTimeout(function(){b.textContent='Copy all as CSS variables';},1100);}
+  function palTab(btn){var p=btn.getAttribute('data-pane');
+    document.querySelectorAll('.pal-tab').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');
+    document.querySelectorAll('.pal-pane').forEach(function(pane){pane.classList.remove('on');});
+    document.getElementById('pane-'+p).classList.add('on');}
+  (function initPalette(){
+    buildSwatches();
+    fillSelect(document.getElementById('ctFg'),ALL,6);
+    fillSelect(document.getElementById('ctBg'),ALL,0);
+    fillSelect(document.getElementById('shBase'),ALL,0);
+    fillSelect(document.getElementById('grA'),ALL,0);
+    fillSelect(document.getElementById('grB'),ALL,1);
+    renderContrast();renderShades();renderGradient();buildExport();
+  })();
+
+  // font switcher
+  // path-draw: measure each opted-in shape so the dash math is exact
+  document.querySelectorAll('.draw').forEach(function(svg){
+    svg.querySelectorAll('path,circle,rect,line').forEach(function(p){
+      try{ var len=Math.ceil(p.getTotalLength()); p.style.setProperty('--len',len); }
+      catch(e){ p.style.setProperty('--len',300); }
+    });
+  });
+
+  // modals
+  function openModal(id){document.getElementById(id).classList.add('open');document.body.style.overflow='hidden';
+    if(id==='mHoro'){var r=document.getElementById('horoResult');if(r)r.classList.remove('show');document.querySelectorAll('#horoSigns .horo-sign').forEach(function(b){b.classList.remove('on');});var sg=document.getElementById('horoSigns');if(sg)sg.style.display='';var rv=document.getElementById('horoReveal');if(rv)rv.classList.remove('in');var cn=document.getElementById('horoConstel');if(cn)cn.classList.remove('draw');}}
+  function closeModal(id){document.getElementById(id).classList.remove('open');document.body.style.overflow='';}
+  function toggleWebinars(e){
+    // Clicks inside the expanded content (filter chips, register links, cards) should NOT collapse the panel.
+    if(e && e.target && e.target.closest && e.target.closest('#wbCollapse')) return;
+    var p=document.getElementById('wbCollapse');
+    var c=document.getElementById('wbChevron');
+    var cue=document.getElementById('wbCue');
+    var o=p.classList.toggle('open');
+    c.classList.toggle('open',o);
+    if(cue) cue.textContent=o?'Click header to collapse':'Click to browse sessions';
+  }
+  function toggleSpotify(){
+    var panel=document.getElementById('spotifyPanel');
+    var chevron=document.getElementById('spotifyChevron');
+    var isOpen=panel.classList.toggle('open');
+    chevron.classList.toggle('open',isOpen);
+  }
+  function toggleHero(){
+    var rev=document.getElementById('missionReveal');
+    var tgl=document.getElementById('heroToggle');
+    var lbl=document.getElementById('heroToggleLabel');
+    var open=rev.classList.toggle('open');
+    tgl.classList.toggle('open',open);
+    tgl.setAttribute('aria-expanded',open);
+    lbl.textContent=open?'Hide mission':'Read our mission';
+  }
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.modal-scrim.open').forEach(function(m){m.classList.remove('open');});document.body.style.overflow='';}});
+
+  // acronym search
+  var acCat='all';
+  function acTab(btn){
+    acCat=btn.getAttribute('data-cat');
+    document.querySelectorAll('.ac-tab').forEach(function(b){b.classList.remove('on');});
+    btn.classList.add('on');
+    filterAc();
+  }
+  function filterAc(){
+    var q=document.getElementById('acSearch').value.toLowerCase();
+    var anyVisible=false;
+    document.querySelectorAll('#acList .ac-group').forEach(function(g){
+      var inCat=(acCat==='all'||g.getAttribute('data-cat')===acCat);
+      var groupHas=false;
+      g.querySelectorAll('.ac-row').forEach(function(r){
+        var match=inCat && r.textContent.toLowerCase().indexOf(q)>-1;
+        r.style.display=match?'grid':'none';
+        if(match){groupHas=true;anyVisible=true;}
+      });
+      g.style.display=groupHas?'block':'none';
+    });
+    document.getElementById('acNone').style.display=anyVisible?'none':'block';
+  }
+  // WEBINARS array now lives in webinars.js (loaded before this script).
+
+var WB_ZONES=[
+  {label:"PST",offset:-2},
+  {label:"MST",offset:-1},
+  {label:"CST",offset:0,cst:true},
+  {label:"EST",offset:+1},
+  {label:"PHT",offset:+13}
+];
+var WB_SKILLNAMES={ai:"AI in L&D",strategy:"Strategy",video:"Video",accessibility:"Accessibility",lmsdocebo:"LMS & Docebo",authoring:"Authoring"};
+
+function wbFmt(d){var h=d.getHours(),m=d.getMinutes();var ap=h>=12?"pm":"am";h=h%12;if(h===0)h=12;return h+(m?":"+String(m).padStart(2,"0"):"")+ap;}
+function wbZoneStrip(dateCST){
+  var base=new Date(dateCST);
+  return '<div class="wb-zones">'+WB_ZONES.map(function(z){
+    var d=new Date(base.getTime()+z.offset*3600000);
+    return '<div class="wb-zone"><div class="wb-z">'+z.label+'</div><div class="wb-t">'+wbFmt(d)+'</div></div>';
+  }).join('')+'</div>';
+}
+function wbSkillTags(skills){return '<div class="wb-skills">'+skills.map(function(s){return '<span class="wb-skill">'+(WB_SKILLNAMES[s]||s)+'</span>';}).join('')+'</div>';}
+function wbIsLive(w){return new Date(w.dateCST)>=new Date(new Date().toDateString());}
+
+function wbBuild(){
+  var g=document.getElementById('wbGrid');
+  var live=WEBINARS.filter(wbIsLive).sort(function(a,b){return new Date(a.dateCST)-new Date(b.dateCST);});
+  g.innerHTML=live.map(function(w){
+    var d=new Date(w.dateCST);
+    var dstr=d.toLocaleDateString(undefined,{month:'short',day:'numeric',weekday:'short'});
+    var dur=w.durLabel?'<span class="wb-dur">'+w.durLabel+(w.endLabel?' · '+w.endLabel:'')+'</span>':'';
+    return '<article class="wb-card" data-skills="'+w.skills.join(' ')+'">'
+      +'<div class="wb-top"><div><h3>'+w.title+'</h3><div class="wb-host">'+w.host+'</div></div></div>'
+      +'<div class="wb-meta"><span class="wb-when"><span class="wb-dot"></span>'+dstr+'</span>'+dur+'</div>'
+      +wbZoneStrip(w.dateCST)
+      +wbSkillTags(w.skills)
+      +'<p class="wb-overview">'+w.overview+'</p>'
+      +'<div class="wb-foot"><a class="wb-reg" href="'+w.link+'" target="_blank" rel="noopener">Register <span class="arrow">\u2197</span></a></div>'
+      +'</article>';
+  }).join('');
+  document.getElementById('wbEmpty').classList.toggle('show',live.length===0);
+}
+function wbFilter(skill){
+  var items=document.querySelectorAll('#wbGrid .wb-card');var shown=0;
+  items.forEach(function(it){
+    var ok=skill==='all'||it.getAttribute('data-skills').split(' ').indexOf(skill)>-1;
+    it.classList.toggle('wb-hidden',!ok);if(ok)shown++;
+  });
+  document.getElementById('wbEmpty').classList.toggle('show',shown===0);
+}
+(function(){
+  var bar=document.querySelector('.wb-filters[data-scope="webinars"]');
+  if(!bar)return;
+  bar.querySelectorAll('.wb-chip').forEach(function(c){
+    c.addEventListener('click',function(){
+      bar.querySelectorAll('.wb-chip').forEach(function(x){x.classList.remove('on');});
+      c.classList.add('on');wbFilter(c.getAttribute('data-skill'));
+    });
+  });
+  wbBuild();
+})();
+
+</script>
+</body>
+</html>
