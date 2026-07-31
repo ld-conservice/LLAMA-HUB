@@ -19,6 +19,13 @@
 /* EDIT MONTHLY: add/remove rows below. dateCST = start in U.S. Central, 24h.
    Past dates auto-hide. For half-day events set durLabel + endLabel. */
 var WEBINARS=[
+  { title:"Watch Me Build an eLearning Course With Claude in One Sitting",
+    host:"Dr. Pooja Jaisingh · Training Magazine Network",
+    dateCST:"2026-09-03T11:00", durLabel:"1 hr",
+    skills:["ai","authoring"],
+    overview:"Dr. Pooja Jaisingh builds an eLearning course from a blank page to finished interactions in one sitting, using Claude at every phase. You see the actual prompts, the moments she steps in to redirect, and the design decisions she still makes herself, including the parts that do not go smoothly.",
+    link:"https://www.trainingmagnetwork.com/events/4551" },
+
   { title:"The AI Implementation Guide for L&D: Book Release Celebration",
     host:"Megan Torrance · Training Magazine Network",
     dateCST:"2026-06-24T11:00", durLabel:"1 hr",
