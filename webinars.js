@@ -199,5 +199,12 @@ var WEBINARS=[
     dateCST:"2026-09-03T09:30", durLabel:"1 hr",
     skills:["ai","authoring"],
     overview:"Mark Schuster of CYPHER Learning asks whether standalone authoring tools are becoming obsolete as AI creates, personalizes, and validates learning in minutes. A practical framework for evaluating AI-enabled tools, with governance, security, and compliance front and center.",
-    link:"https://elearningindustry.com/webinars/do-we-still-need-authoring-tools-how-ai-is-reshaping-enterprise-learning" }
+    link:"https://elearningindustry.com/webinars/do-we-still-need-authoring-tools-how-ai-is-reshaping-enterprise-learning" },
+
+  { title:"Telling Magical Stories with PowerPoint",
+    host:"Rick Altman · Training Magazine Network",
+    dateCST:"2026-09-25T10:00", durLabel:"1 hr",
+    skills:["strategy","authoring"],
+    overview:"Rick Altman digs into PowerPoint's Animation, Morph, and interactivity tools to show how they help you explain complex concepts and systems. A hands-on hour with live examples and a full download site so you can see exactly how each story is built.",
+    link:"https://www.trainingmagnetwork.com/events/4586?gref=SG_SA1_082826" }
 ];
