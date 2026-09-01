@@ -508,7 +508,7 @@
   .agx-carousel{position:relative;}
   .agx-vp{overflow:hidden;}
   .agx-track{display:flex;transition:transform .38s cubic-bezier(.2,.7,.2,1);}
-  .agx-slide{flex:0 0 100%;padding:26px 30px 8px;text-align:center;min-height:452px;
+  .agx-slide{flex:0 0 100%;padding:26px 30px 8px;text-align:center;min-height:470px;
     display:flex;flex-direction:column;align-items:center;}
   .agx-portrait{width:176px;max-width:56%;aspect-ratio:1/1;margin:0 auto 16px;border-radius:16px;
     overflow:hidden;border:2px solid var(--accent);background:#0f171e;
@@ -519,10 +519,14 @@
   .agx-portrait .ph{width:100%;height:100%;display:grid;place-content:center;
     font-family:var(--hfont,'Space Grotesk',sans-serif);font-weight:800;font-size:48px;color:#93a6b4;}
   .agx-nm{font-family:var(--hfont,'Space Grotesk',sans-serif);font-weight:800;font-size:28px;
-    letter-spacing:-.01em;margin:0 0 7px;line-height:1;color:#fff;}
+    letter-spacing:-.01em;margin:0 0 9px;line-height:1;color:#fff;}
+  .agx-tagrow{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:13px;}
   .agx-role{display:inline-block;font-family:var(--hfont,'Space Grotesk',sans-serif);font-size:10px;
     letter-spacing:.1em;font-weight:700;text-transform:uppercase;color:var(--accent);
-    border:1px solid var(--accent);border-radius:6px;padding:3px 10px;margin-bottom:13px;}
+    border:1px solid var(--accent);border-radius:6px;padding:3px 10px;}
+  .agx-plat{display:inline-block;font-family:var(--hfont,'Space Grotesk',sans-serif);font-size:10px;
+    letter-spacing:.1em;font-weight:700;text-transform:uppercase;color:#cdd8e0;
+    border:1px solid rgba(255,255,255,.24);border-radius:6px;padding:3px 10px;}
   .agx-does{margin:0 auto;font-size:14.5px;line-height:1.5;color:#d3dee6;max-width:min(100%,430px);}
   .agx-run{display:flex;align-items:center;gap:8px;justify-content:center;margin:18px auto 0;
     max-width:min(100%,430px);flex-wrap:nowrap;}
@@ -534,7 +538,13 @@
     font-family:var(--hfont,'Space Grotesk',sans-serif);font-weight:600;}
   .agx-copy:hover{border-color:var(--accent);}
   .agx-copy.done{background:var(--accent);color:#0c1218;border-color:var(--accent);}
-  .agx-launch{display:inline-block;margin-top:12px;font-family:var(--hfont,'Space Grotesk',sans-serif);
+  .agx-auto{display:flex;align-items:center;gap:9px;justify-content:center;margin:18px auto 0;
+    max-width:min(100%,430px);background:#0c1218;border:1px solid rgba(255,255,255,.14);
+    border-left:3px solid var(--accent);border-radius:8px;padding:9px 12px;font-size:13px;color:#e7eef3;}
+  .agx-auto .t{flex:0 0 auto;font-family:var(--hfont,'Space Grotesk',sans-serif);font-size:9.5px;
+    font-weight:700;letter-spacing:.08em;color:#0c1218;background:var(--accent);border-radius:4px;padding:2px 6px;}
+  .agx-where{margin:9px auto 0;font-size:12px;color:#93a6b4;max-width:min(100%,430px);line-height:1.4;}
+  .agx-launch{display:inline-block;margin-top:11px;font-family:var(--hfont,'Space Grotesk',sans-serif);
     font-size:11.5px;letter-spacing:.02em;font-weight:600;color:var(--accent);text-decoration:none;
     border-bottom:1px dashed color-mix(in srgb,var(--accent) 60%,transparent);padding-bottom:1px;}
   .agx-launch:hover{border-bottom-style:solid;}
@@ -549,7 +559,7 @@
   .agx-dot{width:9px;height:9px;border-radius:50%;border:0;background:rgba(255,255,255,.14);cursor:pointer;
     padding:0;transition:background .2s,transform .2s;}
   .agx-dot[aria-current="true"]{background:var(--accent);transform:scale(1.3);}
-  @media(max-width:480px){.agx-slide{padding:20px 18px 6px;min-height:412px;}.agx-portrait{width:150px;}
+  @media(max-width:480px){.agx-slide{padding:20px 18px 6px;min-height:432px;}.agx-portrait{width:150px;}
     .agx-arrow{top:98px;width:34px;height:34px;}}
   @media(prefers-reduced-motion:reduce){.agx-track{transition:none;}
     .agx-portrait{animation:none;box-shadow:0 10px 24px rgba(0,0,0,.4),0 0 22px color-mix(in srgb,var(--accent) 28%,transparent);}}
@@ -630,7 +640,7 @@
       <a class="libcard" href="https://docs.google.com/document/d/1shSCZc2SpWoyN_YYH_nFdsJ7WbZR2uUqewNyHNMeE98/edit?usp=sharing" target="_blank" rel="noopener"><div class="ico"><svg class="draw" viewBox="0 0 24 24"><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6"/><path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4"/></svg></div><div class="body"><h3>LMS Request Guide ↗</h3><p>Submit and track a new course request.</p></div></a>
       <div class="libcard" onclick="openModal('mAcro')"><div class="ico"><svg class="draw" viewBox="0 0 24 24"><path d="M5 8a2 2 0 0 1 2 2v4a2 2 0 1 1 -4 0v-4a2 2 0 0 1 2 -2"/><path d="M6 15l1 1"/><path d="M21 8h-4v8h4"/><path d="M17 12h2.5"/><path d="M10 8v6a2 2 0 1 0 4 0v-6"/></svg></div><div class="body"><h3>Acronyms &amp; Terms <span class="pill">popup</span></h3><p>Searchable glossary — opens right here, no new page.</p></div></div>
       <div class="libcard" onclick="openModal('mPalette')"><div class="ico"><svg class="draw" viewBox="0 0 24 24"><path d="M12 21a9 9 0 0 1 0 -18c4.97 0 9 3.582 9 8c0 1.06 -.474 2.078 -1.318 2.828c-.844 .75 -1.989 1.172 -3.182 1.172h-2.5a2 2 0 0 0 -1 3.75a1.3 1.3 0 0 1 -1 2.25"/><path d="M8.5 10.5a1 1 0 1 0 0 -.001"/><path d="M12.5 7.5a1 1 0 1 0 0 -.001"/><path d="M16.5 10.5a1 1 0 1 0 0 -.001"/></svg></div><div class="body"><h3>Brand Palette Lab <span class="pill">popup</span></h3><p>Swatches, contrast checker, tints, gradients — copy-ready.</p></div></div>
-      <div class="libcard" id="agxTile" onclick="openModal('mAgents')"><div class="ico"><svg class="draw" viewBox="0 0 24 24"><path d="M7 7h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2z"/><path d="M12 7v-3"/><path d="M10 4h4"/><path d="M9 16h6"/><path d="M8.5 11.5v1.5"/><path d="M15.5 11.5v1.5"/><path d="M3 12v2"/><path d="M21 12v2"/></svg></div><div class="body"><h3>Meet the AI Agents <span class="pill">popup</span></h3><p>Llama Land's four assistants and the phrase that runs each one.</p></div></div>
+      <div class="libcard" id="agxTile" onclick="openModal('mAgents')"><div class="ico"><svg class="draw" viewBox="0 0 24 24"><path d="M7 7h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2z"/><path d="M12 7v-3"/><path d="M10 4h4"/><path d="M9 16h6"/><path d="M8.5 11.5v1.5"/><path d="M15.5 11.5v1.5"/><path d="M3 12v2"/><path d="M21 12v2"/></svg></div><div class="body"><h3>Meet the AI Agents <span class="pill">popup</span></h3><p>Llama Land's four assistants and how to run each one.</p></div></div>
     </div>
 
     <div class="wb-glass" id="webinars" onclick="toggleWebinars(event)">
@@ -1311,7 +1321,7 @@ function wbFilter(skill){
 <div class="modal-scrim" id="mAgents" onclick="if(event.target===this)closeModal('mAgents')">
   <div class="agx-modal" id="agxModal">
     <div class="agx-head">
-      <p class="agx-eyebrow">Llama Land Ops Assistant</p>
+      <p class="agx-eyebrow">Llama Land 2.0 Agents</p>
       <h3>Meet the AI agents</h3>
       <button class="agx-x" onclick="closeModal('mAgents')" aria-label="Close">&#10005;</button>
     </div>
@@ -1322,25 +1332,25 @@ function wbFilter(skill){
             <div class="agx-slide" data-accent="#77BC1F">
               <div class="agx-portrait"><img src="assets/Arnold.png" alt="Arnold" onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('beforeend','<div class=ph>A</div>')"></div>
               <p class="agx-nm">Arnold</p>
-              <span class="agx-role">TIME TRACKING</span>
+              <div class="agx-tagrow"><span class="agx-role">Time Tracking</span><span class="agx-plat">Monday Agent</span></div>
               <p class="agx-does">Finds Draft and Revisions work with no time logged for 7+ days, nudges you, and flags projects nearing or over their hour estimate.</p>
-              <div class="agx-run"><code>Run Arnold</code><button class="agx-copy" data-copy="Run Arnold">Copy</button></div>
-              <a class="agx-launch" href="https://claude.ai/project/019fb5d9-519e-73ac-940c-4c3580d32004" target="_blank" rel="noopener">Open the Ops Assistant project &#8599;</a>
+              <div class="agx-auto"><span class="t">AUTO</span>Runs on its own every Friday at 1pm MT</div>
+              <p class="agx-where">No action needed. Just keep your time logged during the week.</p>
               <p class="agx-note">Good-natured but relentless. He'll be back every Friday.</p>
             </div>
             <div class="agx-slide" data-accent="#D14D8B">
               <div class="agx-portrait"><img src="assets/Lucinda.png" alt="Lucinda" onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('beforeend','<div class=ph>L</div>')"></div>
               <p class="agx-nm">Lucinda</p>
-              <span class="agx-role">LMS</span>
+              <div class="agx-tagrow"><span class="agx-role">LMS</span><span class="agx-plat">Monday Agent</span></div>
               <p class="agx-does">Posts the right LMS checklist plus the handoff form for Laney, built from your LMS subitem.</p>
-              <div class="agx-run"><code>Run Lucinda</code><button class="agx-copy" data-copy="Run Lucinda">Copy</button></div>
-              <a class="agx-launch" href="https://claude.ai/project/019fb5d9-519e-73ac-940c-4c3580d32004" target="_blank" rel="noopener">Open the Ops Assistant project &#8599;</a>
-              <p class="agx-note">Favorite-aunt energy. Fill the LMS columns first, then run her.</p>
+              <div class="agx-run"><code>@lucinda</code><button class="agx-copy" data-copy="@lucinda">Copy</button></div>
+              <p class="agx-where">Fill the LMS columns first, then comment @lucinda on the LMS sub-item in Monday.</p>
+              <p class="agx-note">Favorite-aunt energy. She reminds, never nags.</p>
             </div>
             <div class="agx-slide" data-accent="#E08A1E">
               <div class="agx-portrait"><img src="assets/Coriander.png" alt="Coriander" onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('beforeend','<div class=ph>C</div>')"></div>
               <p class="agx-nm">Coriander</p>
-              <span class="agx-role">CQP DIGEST</span>
+              <div class="agx-tagrow"><span class="agx-role">CQP Digest</span><span class="agx-plat">Run in Claude</span></div>
               <p class="agx-does">Pulls your month for CQP: completed and active projects, deliverables, hours, revisions, and extensions. Programs excluded.</p>
               <div class="agx-run"><code>Run Coriander</code><button class="agx-copy" data-copy="Run Coriander">Copy</button></div>
               <a class="agx-launch" href="https://claude.ai/project/019fb5d9-519e-73ac-940c-4c3580d32004" target="_blank" rel="noopener">Open the Ops Assistant project &#8599;</a>
@@ -1349,7 +1359,7 @@ function wbFilter(skill){
             <div class="agx-slide" data-accent="#B892E8">
               <div class="agx-portrait"><img src="assets/Jude.png" alt="Jude" onerror="this.style.display='none';this.parentNode.insertAdjacentHTML('beforeend','<div class=ph>J</div>')"></div>
               <p class="agx-nm">Jude</p>
-              <span class="agx-role">STAKEHOLDER UPDATES</span>
+              <div class="agx-tagrow"><span class="agx-role">Stakeholder Updates</span><span class="agx-plat">Run in Claude</span></div>
               <p class="agx-does">Drafts your stakeholder email from the board using P.A.T.H., as a Gmail draft you review before it sends.</p>
               <div class="agx-run"><code>Hey Jude, write my weekly stakeholder update for [Project]</code><button class="agx-copy" data-copy="Hey Jude, write my weekly stakeholder update for [Project]">Copy</button></div>
               <a class="agx-launch" href="https://claude.ai/project/019fb5d9-519e-73ac-940c-4c3580d32004" target="_blank" rel="noopener">Open the Ops Assistant project &#8599;</a>
@@ -1360,7 +1370,6 @@ function wbFilter(skill){
     </div>
   </div>
 </div>
-
 <script>(function(){
   var track=document.getElementById('agxTrack'); if(!track) return;
   var slides=[].slice.call(track.children), modal=document.getElementById('agxModal'), dotsWrap=document.getElementById('agxDots'), idx=0;
