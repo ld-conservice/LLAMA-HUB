@@ -19,6 +19,13 @@
 /* EDIT MONTHLY: add/remove rows below. dateCST = start in U.S. Central, 24h.
    Past dates auto-hide. For half-day events set durLabel + endLabel. */
 var WEBINARS=[
+  { title:"Learning is an Investment. Can You Prove It?",
+    host:"Rafael Santamaria & Jack Pappara · Docebo",
+    dateCST:"2026-09-24T09:00", durLabel:"1 hr",
+    skills:["lmsdocebo","strategy"],
+    overview:"Docebo Customer Success Managers Rafael Santamaria and Jack Pappara run a hands-on working session on moving from LMS activity metrics to proving real business impact — with a program maturity benchmark, a 90-day action plan template, and an evidence-based model for communicating success to executives.",
+    link:"https://community.docebo.com/events/learning-is-an-investment-can-you-prove-it-215" },
+
   { title:"Watch Me Build an eLearning Course With Claude in One Sitting",
     host:"Dr. Pooja Jaisingh · Training Magazine Network",
     dateCST:"2026-09-03T11:00", durLabel:"1 hr",
